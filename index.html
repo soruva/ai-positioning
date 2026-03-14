@@ -1,342 +1,210 @@
-import React, { useMemo, useState } from 'react';
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>AI Job Test</title>
 
-const questions = [
-  { id: 1, text: 'Does your job require human empathy?', reverse: false },
-  { id: 2, text: 'Do you solve unexpected problems often?', reverse: false },
-  { id: 3, text: 'Do you interact with people face-to-face?', reverse: false },
-  { id: 4, text: 'Does your work involve creativity?', reverse: false },
-  { id: 5, text: 'Do you make complex decisions?', reverse: false },
-  { id: 6, text: 'Does your job depend on trust or relationships?', reverse: false },
-  { id: 7, text: 'Is your work mostly repetitive?', reverse: true },
-  { id: 8, text: 'Could software automate most of your tasks?', reverse: true },
-  { id: 9, text: 'Do you regularly learn new skills?', reverse: false },
-  { id: 10, text: 'Do you work in unpredictable environments?', reverse: false },
-];
+<style>
 
-const choices = [
-  { label: 'Yes', value: 'yes' },
-  { label: 'Sometimes', value: 'sometimes' },
-  { label: 'No', value: 'no' },
-];
-
-const scoreMap = {
-  normal: { yes: 2, sometimes: 1, no: 0 },
-  reverse: { yes: 0, sometimes: 1, no: 2 },
-};
-
-function calculateTotalScore(answers) {
-  return questions.reduce((sum, question) => {
-    const answer = answers[question.id];
-    if (!answer) return sum;
-
-    const map = question.reverse ? scoreMap.reverse : scoreMap.normal;
-    return sum + (map[answer] ?? 0);
-  }, 0);
+body{
+font-family:Arial,Helvetica,sans-serif;
+background:#0f172a;
+color:white;
+text-align:center;
+padding:40px;
 }
 
-function getResultFromScore(totalScore) {
-  if (totalScore >= 16) {
-    return {
-      title: 'Very Hard to Replace',
-      badge: 'Strong Human Advantage',
-      color: 'from-emerald-400/20 to-cyan-400/20',
-      border: 'border-emerald-400/30',
-      text: 'Your work relies heavily on human strengths like empathy, trust, judgment, and creativity.',
-    };
-  }
-
-  if (totalScore >= 11) {
-    return {
-      title: 'Moderately Safe',
-      badge: 'Adaptable Career',
-      color: 'from-yellow-400/20 to-cyan-400/20',
-      border: 'border-yellow-400/30',
-      text: 'Your career still benefits from human skills, but AI may change parts of how you work.',
-    };
-  }
-
-  if (totalScore >= 6) {
-    return {
-      title: 'At Risk',
-      badge: 'Upskill Recommended',
-      color: 'from-orange-400/20 to-red-400/20',
-      border: 'border-orange-400/30',
-      text: 'Some important parts of your job could be automated in the near future.',
-    };
-  }
-
-  return {
-    title: 'High AI Risk',
-    badge: 'Action Needed',
-    color: 'from-red-500/20 to-fuchsia-500/20',
-    border: 'border-red-400/30',
-    text: 'Your current work may be highly vulnerable to AI disruption. Building new skills is urgent.',
-  };
+.container{
+max-width:700px;
+margin:auto;
+background:#1e293b;
+padding:30px;
+border-radius:20px;
 }
 
-export default function AIJobTestMVP() {
-  const [started, setStarted] = useState(false);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [answers, setAnswers] = useState({});
-  const [submittedEmail, setSubmittedEmail] = useState(false);
-  const [email, setEmail] = useState('');
-
-  const isComplete = started && currentIndex >= questions.length;
-  const currentQuestion = !isComplete ? questions[currentIndex] : null;
-  const selectedAnswer = currentQuestion ? answers[currentQuestion.id] : undefined;
-
-  const totalScore = useMemo(() => calculateTotalScore(answers), [answers]);
-  const result = useMemo(() => getResultFromScore(totalScore), [totalScore]);
-  const progress = started ? Math.min(((currentIndex + 1) / questions.length) * 100, 100) : 0;
-
-  const handleSelect = (value) => {
-    if (!currentQuestion) return;
-    setAnswers((prev) => ({ ...prev, [currentQuestion.id]: value }));
-  };
-
-  const handleNext = () => {
-    if (!selectedAnswer) return;
-
-    if (currentIndex < questions.length - 1) {
-      setCurrentIndex((prev) => prev + 1);
-      return;
-    }
-
-    setCurrentIndex(questions.length);
-  };
-
-  const handleRestart = () => {
-    setStarted(false);
-    setCurrentIndex(0);
-    setAnswers({});
-    setSubmittedEmail(false);
-    setEmail('');
-  };
-
-  const handleEmailSubmit = (e) => {
-    e.preventDefault();
-    if (!email.trim()) return;
-    setSubmittedEmail(true);
-  };
-
-  return (
-    <div className="min-h-screen bg-slate-950 px-4 py-8 text-white md:px-8 md:py-12">
-      <div className="mx-auto max-w-4xl">
-        <div className="mb-8 text-center">
-          <p className="text-sm uppercase tracking-[0.35em] text-cyan-300">Global Quiz MVP</p>
-          <h1 className="mt-3 text-4xl font-bold md:text-6xl">AI Job Test</h1>
-          <p className="mx-auto mt-4 max-w-2xl text-base text-slate-300 md:text-lg">
-            Will AI replace your job? Take the 30-second test to find out your AI risk score.
-          </p>
-        </div>
-
-        {!started && (
-          <div className="rounded-[2rem] border border-slate-800 bg-slate-900/70 p-8 text-center shadow-2xl">
-            <div className="mx-auto max-w-2xl space-y-5">
-              <div className="inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-4 py-2 text-sm text-cyan-200">
-                Fast, simple, and easy to share
-              </div>
-              <h2 className="text-2xl font-semibold md:text-3xl">Find out how exposed your career is to AI</h2>
-              <p className="leading-7 text-slate-300">
-                This test uses 10 quick questions to estimate how much your work depends on human strengths like empathy, trust,
-                creativity, and complex judgment.
-              </p>
-              <div className="grid gap-3 text-left md:grid-cols-3">
-                <Feature text="10 short questions" />
-                <Feature text="Results in 30 seconds" />
-                <Feature text="Built for global users" />
-              </div>
-              <button
-                onClick={() => setStarted(true)}
-                className="mt-4 rounded-2xl bg-cyan-400 px-6 py-4 text-lg font-semibold text-slate-950 shadow-lg transition hover:scale-[1.02]"
-              >
-                Start Test
-              </button>
-            </div>
-          </div>
-        )}
-
-        {started && !isComplete && currentQuestion && (
-          <div className="space-y-6">
-            <div className="rounded-[2rem] border border-slate-800 bg-slate-900/70 p-5 shadow-xl">
-              <div className="flex items-center justify-between gap-4 text-sm text-slate-300">
-                <span>
-                  Question {currentIndex + 1} of {questions.length}
-                </span>
-                <span>{Math.round(progress)}%</span>
-              </div>
-              <div className="mt-3 h-3 overflow-hidden rounded-full bg-slate-800">
-                <div className="h-full rounded-full bg-cyan-400 transition-all" style={{ width: `${progress}%` }} />
-              </div>
-            </div>
-
-            <div className="rounded-[2rem] border border-slate-800 bg-slate-900/70 p-8 shadow-2xl">
-              <p className="text-sm uppercase tracking-[0.3em] text-slate-400">Career Signal</p>
-              <h2 className="mt-4 text-2xl font-semibold md:text-4xl">{currentQuestion.text}</h2>
-
-              <div className="mt-8 grid gap-4">
-                {choices.map((choice) => {
-                  const active = selectedAnswer === choice.value;
-                  return (
-                    <button
-                      key={choice.value}
-                      onClick={() => handleSelect(choice.value)}
-                      className={`rounded-2xl border px-5 py-4 text-left text-lg transition ${
-                        active
-                          ? 'border-cyan-300 bg-cyan-400/15 text-white'
-                          : 'border-slate-700 bg-slate-800/70 text-slate-200 hover:border-slate-500 hover:bg-slate-800'
-                      }`}
-                    >
-                      {choice.label}
-                    </button>
-                  );
-                })}
-              </div>
-
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-between">
-                <button
-                  onClick={handleRestart}
-                  className="rounded-2xl border border-slate-700 px-5 py-3 text-slate-300 transition hover:bg-slate-800"
-                >
-                  Restart
-                </button>
-                <button
-                  onClick={handleNext}
-                  disabled={!selectedAnswer}
-                  className="rounded-2xl bg-cyan-400 px-6 py-3 font-semibold text-slate-950 transition enabled:hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-40"
-                >
-                  {currentIndex === questions.length - 1 ? 'See Result' : 'Next Question'}
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {isComplete && (
-          <div className="space-y-6">
-            <div className={`rounded-[2rem] border ${result.border} bg-gradient-to-br ${result.color} p-8 shadow-2xl`}>
-              <div className="inline-flex rounded-full border border-white/10 bg-white/10 px-4 py-2 text-sm text-white/90">
-                {result.badge}
-              </div>
-              <h2 className="mt-5 text-3xl font-bold md:text-5xl">{result.title}</h2>
-              <p className="mt-4 max-w-2xl text-lg leading-8 text-slate-100">{result.text}</p>
-              <div className="mt-6 grid gap-4 md:grid-cols-3">
-                <Metric label="AI Score" value={`${totalScore}/20`} />
-                <Metric label="Completion" value="100%" />
-                <Metric label="Next Step" value="Get full report" />
-              </div>
-            </div>
-
-            <div className="rounded-[2rem] border border-slate-800 bg-slate-900/70 p-8 shadow-xl">
-              <div className="grid gap-8 md:grid-cols-[1.3fr_1fr] md:items-start">
-                <div>
-                  <p className="text-sm uppercase tracking-[0.3em] text-cyan-300">Monetization CTA</p>
-                  <h3 className="mt-3 text-2xl font-semibold md:text-3xl">Get the Full AI-Proof Career Report</h3>
-                  <p className="mt-4 leading-7 text-slate-300">
-                    Turn this free result into a lead magnet. Offer a deeper report with future-proof skills, safer career paths,
-                    and industries that may grow in the AI era.
-                  </p>
-                  <ul className="mt-5 space-y-3 text-slate-200">
-                    <Bullet text="Future-proof skills to build next" />
-                    <Bullet text="Safer career paths to explore" />
-                    <Bullet text="High-growth AI-era industries" />
-                  </ul>
-                </div>
-
-                <div className="rounded-[1.75rem] border border-slate-700 bg-slate-950/70 p-5">
-                  {!submittedEmail ? (
-                    <form onSubmit={handleEmailSubmit} className="space-y-4">
-                      <label className="block text-sm text-slate-300">Enter your email to unlock the full report</label>
-                      <input
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        placeholder="you@example.com"
-                        className="w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none transition focus:border-cyan-400"
-                      />
-                      <button
-                        type="submit"
-                        className="w-full rounded-2xl bg-cyan-400 px-5 py-3 font-semibold text-slate-950 transition hover:scale-[1.02]"
-                      >
-                        Unlock Full Report
-                      </button>
-                    </form>
-                  ) : (
-                    <div className="space-y-3">
-                      <div className="inline-flex rounded-full border border-emerald-400/30 bg-emerald-400/10 px-3 py-1 text-sm text-emerald-300">
-                        Email captured
-                      </div>
-                      <h4 className="text-xl font-semibold">Nice. Your lead flow is working.</h4>
-                      <p className="leading-7 text-slate-300">
-                        Next, connect this form to your email tool, or replace it with a checkout for a $9–$19 premium report.
-                      </p>
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <button
-                  onClick={handleRestart}
-                  className="rounded-2xl border border-slate-700 px-5 py-3 text-slate-300 transition hover:bg-slate-800"
-                >
-                  Retake Test
-                </button>
-                <button className="rounded-2xl bg-white/10 px-5 py-3 text-white transition hover:bg-white/15">
-                  Share Result
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
-    </div>
-  );
+button{
+padding:15px 20px;
+margin:10px;
+font-size:16px;
+border:none;
+border-radius:10px;
+cursor:pointer;
 }
 
-function Feature({ text }) {
-  return <div className="rounded-2xl border border-slate-800 bg-slate-950/60 px-4 py-4 text-slate-200">{text}</div>;
+.start{
+background:#06b6d4;
+color:black;
+font-weight:bold;
 }
 
-function Metric({ label, value }) {
-  return (
-    <div className="rounded-2xl border border-white/10 bg-white/10 p-4">
-      <p className="text-sm text-slate-200/80">{label}</p>
-      <p className="mt-2 text-2xl font-bold">{value}</p>
-    </div>
-  );
+.answer{
+background:#334155;
+color:white;
+width:80%;
 }
 
-function Bullet({ text }) {
-  return (
-    <li className="flex items-start gap-3">
-      <span className="mt-1 h-2.5 w-2.5 rounded-full bg-cyan-400" />
-      <span>{text}</span>
-    </li>
-  );
+.answer:hover{
+background:#475569;
 }
 
-// Lightweight sanity checks for score logic.
-// These are kept inline so the scoring rules stay easy to verify during iteration.
-const __allYesAnswers = Object.fromEntries(questions.map((q) => [q.id, 'yes']));
-const __allNoAnswers = Object.fromEntries(questions.map((q) => [q.id, 'no']));
-const __mixedAnswers = {
-  1: 'yes',
-  2: 'yes',
-  3: 'sometimes',
-  4: 'yes',
-  5: 'sometimes',
-  6: 'yes',
-  7: 'no',
-  8: 'sometimes',
-  9: 'yes',
-  10: 'sometimes',
-};
+.next{
+background:#06b6d4;
+color:black;
+}
 
-console.assert(calculateTotalScore(__allYesAnswers) === 16, 'Expected all-yes score to equal 16');
-console.assert(calculateTotalScore(__allNoAnswers) === 4, 'Expected all-no score to equal 4');
-console.assert(getResultFromScore(16).title === 'Very Hard to Replace', 'Expected score 16 to map to Very Hard to Replace');
-console.assert(getResultFromScore(11).title === 'Moderately Safe', 'Expected score 11 to map to Moderately Safe');
-console.assert(getResultFromScore(6).title === 'At Risk', 'Expected score 6 to map to At Risk');
-console.assert(getResultFromScore(5).title === 'High AI Risk', 'Expected score 5 to map to High AI Risk');
-console.assert(calculateTotalScore(__mixedAnswers) === 15, 'Expected mixed-answer score to equal 15');
+.result{
+font-size:26px;
+margin-top:20px;
+}
+
+.progress{
+margin-bottom:20px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>AI Job Test</h1>
+
+<p>Will AI replace your job? Take the 30-second test.</p>
+
+<div id="game"></div>
+
+</div>
+
+<script>
+
+const questions=[
+"Does your job require human empathy?",
+"Do you solve unexpected problems often?",
+"Do you interact with people face-to-face?",
+"Does your work involve creativity?",
+"Do you make complex decisions?",
+"Does your job depend on trust or relationships?",
+"Is your work mostly repetitive?",
+"Could software automate most of your tasks?",
+"Do you regularly learn new skills?",
+"Do you work in unpredictable environments?"
+]
+
+let index=0
+let score=0
+
+function startGame(){
+
+index=0
+score=0
+showQuestion()
+
+}
+
+function showQuestion(){
+
+const game=document.getElementById("game")
+
+if(index>=questions.length){
+
+showResult()
+return
+
+}
+
+game.innerHTML=`
+
+<div class="progress">
+Question ${index+1} / ${questions.length}
+</div>
+
+<h2>${questions[index]}</h2>
+
+<button class="answer" onclick="answer(2)">Yes</button>
+
+<button class="answer" onclick="answer(1)">Sometimes</button>
+
+<button class="answer" onclick="answer(0)">No</button>
+
+`
+
+}
+
+function answer(value){
+
+if(index==6||index==7){
+
+value=2-value
+
+}
+
+score+=value
+
+index++
+
+showQuestion()
+
+}
+
+function showResult(){
+
+const game=document.getElementById("game")
+
+let result=""
+
+if(score>=16){
+
+result="Very Hard to Replace"
+
+}
+
+else if(score>=11){
+
+result="Moderately Safe"
+
+}
+
+else if(score>=6){
+
+result="At Risk"
+
+}
+
+else{
+
+result="High AI Risk"
+
+}
+
+game.innerHTML=`
+
+<div class="result">
+
+Your Result: <b>${result}</b>
+
+</div>
+
+<p>Score: ${score} / 20</p>
+
+<button class="start" onclick="startGame()">Try Again</button>
+
+`
+
+}
+
+document.getElementById("game").innerHTML=`
+
+<button class="start" onclick="startGame()">
+
+Start Test
+
+</button>
+
+`
+
+</script>
+
+</body>
+</html>
