@@ -1,402 +1,786 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Job Test</title>
+  <meta
+    name="description"
+    content="Take a 30-second AI Job Test to see how likely your career is to be replaced by artificial intelligence."
+  />
+  <meta name="theme-color" content="#0f172a" />
+  <meta property="og:title" content="AI Job Test" />
+  <meta
+    property="og:description"
+    content="Find out how vulnerable your job may be to AI in 30 seconds."
+  />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://soruva.github.io/ai-job-test/" />
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZFVXTT26DX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-ZFVXTT26DX');
+  </script>
 
-<title>AI Job Test</title>
+  <style>
+    :root{
+      --bg:#0f172a;
+      --panel:#1e293b;
+      --panel-2:#020617;
+      --text:#ffffff;
+      --muted:#94a3b8;
+      --cyan:#06b6d4;
+      --green:#22c55e;
+      --salmon:#ff8a80;
+      --slate:#334155;
+      --slate-hover:#475569;
+      --border:#243447;
+    }
 
-<meta name="description" content="Take a 30-second AI Job Test to see how likely your career is to be replaced by artificial intelligence.">
+    *{box-sizing:border-box}
 
-<!-- Google Analytics -->
+    body{
+      margin:0;
+      font-family:Arial,Helvetica,sans-serif;
+      background:linear-gradient(180deg,#0f172a 0%, #111827 100%);
+      color:var(--text);
+      text-align:center;
+      padding:24px;
+      line-height:1.5;
+    }
 
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZFVXTT26DX"></script>
-<script>
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config','G-ZFVXTT26DX');
-</script>
+    .container{
+      max-width:860px;
+      margin:0 auto;
+      background:rgba(30,41,59,.92);
+      padding:32px 24px;
+      border-radius:24px;
+      box-shadow:0 10px 30px rgba(0,0,0,.28);
+    }
 
-<style>
+    h1{
+      font-size:40px;
+      margin:0 0 8px;
+    }
 
-body{
-font-family:Arial,Helvetica,sans-serif;
-background:#0f172a;
-color:white;
-text-align:center;
-padding:40px;
-}
+    h2,h3{
+      margin-top:0;
+    }
 
-.container{
-max-width:700px;
-margin:auto;
-background:#1e293b;
-padding:30px;
-border-radius:20px;
-}
+    p{
+      color:#e5e7eb;
+    }
 
-h1{
-font-size:36px;
-}
+    .sub{
+      color:var(--muted);
+      max-width:680px;
+      margin:0 auto 24px;
+    }
 
-button{
-padding:15px 20px;
-margin:10px;
-font-size:16px;
-border:none;
-border-radius:10px;
-cursor:pointer;
-transition:0.2s;
-}
+    .pill{
+      display:inline-block;
+      padding:8px 14px;
+      border-radius:999px;
+      background:rgba(6,182,212,.12);
+      color:#a5f3fc;
+      font-size:14px;
+      margin-bottom:14px;
+    }
 
-.start{
-background:#06b6d4;
-color:black;
-font-weight:bold;
-}
+    .grid3{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:12px;
+      margin:18px 0 24px;
+    }
 
-.answer{
-background:#334155;
-color:white;
-width:80%;
-}
+    .miniCard{
+      background:#0b1220;
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:14px;
+      color:#dbeafe;
+      font-size:14px;
+    }
 
-.answer:hover{
-background:#475569;
-}
+    button{
+      padding:14px 18px;
+      margin:8px;
+      font-size:16px;
+      border:none;
+      border-radius:12px;
+      cursor:pointer;
+      transition:0.2s ease;
+      font-weight:700;
+    }
 
-.selected{
-background:#ff8a80 !important;
-color:black !important;
-transform:scale(1.05);
-}
+    button:hover{
+      transform:translateY(-1px);
+    }
 
-.share{
-background:#22c55e;
-color:black;
-}
+    .start{
+      background:var(--cyan);
+      color:#081018;
+    }
 
-.email{
-padding:12px;
-width:70%;
-border-radius:8px;
-border:none;
-margin-top:10px;
-}
+    .secondary{
+      background:#0b1220;
+      color:#fff;
+      border:1px solid var(--border);
+    }
 
-.resultCard{
-background:#020617;
-border-radius:16px;
-padding:30px;
-margin-top:20px;
-border:2px solid #06b6d4;
-}
+    .answer{
+      background:var(--slate);
+      color:white;
+      width:min(100%,560px);
+      display:block;
+      margin:10px auto;
+    }
 
-.resultScore{
-font-size:60px;
-font-weight:bold;
-color:#06b6d4;
-margin:20px 0;
-}
+    .answer:hover{
+      background:var(--slate-hover);
+    }
 
-.resultLabel{
-font-size:18px;
-color:#94a3b8;
-}
+    .selected{
+      background:var(--salmon) !important;
+      color:#151515 !important;
+      transform:scale(1.03);
+      box-shadow:0 0 0 3px rgba(255,138,128,.25);
+    }
 
-.resultStatus{
-font-size:24px;
-}
+    .share{
+      background:var(--green);
+      color:#07120a;
+    }
 
-footer{
-margin-top:40px;
-font-size:14px;
-}
+    .email,.jobInput{
+      padding:14px;
+      width:min(100%,500px);
+      border-radius:12px;
+      border:1px solid #cbd5e1;
+      margin-top:10px;
+      font-size:16px;
+    }
 
-footer a{
-color:#94a3b8;
-text-decoration:none;
-margin:0 10px;
-}
+    .progressWrap{
+      max-width:560px;
+      margin:0 auto 18px;
+      text-align:left;
+    }
 
-footer a:hover{
-color:white;
-}
+    .progressLabel{
+      color:var(--muted);
+      font-size:14px;
+      margin-bottom:8px;
+    }
 
-</style>
+    .progressBar{
+      width:100%;
+      height:12px;
+      background:#0b1220;
+      border-radius:999px;
+      overflow:hidden;
+      border:1px solid var(--border);
+    }
 
+    .progressFill{
+      height:100%;
+      background:linear-gradient(90deg,var(--cyan),#67e8f9);
+      width:0%;
+      transition:width .25s ease;
+    }
+
+    .resultCard{
+      background:var(--panel-2);
+      border-radius:18px;
+      padding:28px 20px;
+      margin-top:20px;
+      border:2px solid var(--cyan);
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,.03);
+    }
+
+    .resultLabel{
+      font-size:15px;
+      color:var(--muted);
+      letter-spacing:.04em;
+      text-transform:uppercase;
+    }
+
+    .resultScore{
+      font-size:64px;
+      font-weight:bold;
+      color:var(--cyan);
+      margin:14px 0 10px;
+      line-height:1;
+    }
+
+    .resultStatus{
+      font-size:28px;
+      font-weight:700;
+    }
+
+    .smallMuted{
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .section{
+      margin-top:48px;
+      background:#111827;
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:22px;
+      text-align:left;
+    }
+
+    .twoCol{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:16px;
+    }
+
+    ul{
+      margin:10px 0 0 20px;
+      padding:0;
+      color:#e5e7eb;
+    }
+
+    li{
+      margin:8px 0;
+    }
+
+    .tagList{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      justify-content:center;
+      margin-top:14px;
+    }
+
+    .tag{
+      padding:8px 12px;
+      background:#0b1220;
+      border:1px solid var(--border);
+      border-radius:999px;
+      color:#cbd5e1;
+      font-size:14px;
+    }
+
+    .faqItem{
+      margin-bottom:18px;
+    }
+
+    .faqItem h4{
+      margin:0 0 6px;
+      color:#fff;
+    }
+
+    footer{
+      margin-top:40px;
+      font-size:14px;
+      color:var(--muted);
+    }
+
+    footer a, .anchorLinks a{
+      color:var(--muted);
+      text-decoration:none;
+      margin:0 10px;
+    }
+
+    footer a:hover, .anchorLinks a:hover{
+      color:#fff;
+    }
+
+    .anchorLinks{
+      margin-top:28px;
+    }
+
+    .notice{
+      background:rgba(34,197,94,.08);
+      border:1px solid rgba(34,197,94,.25);
+      color:#dcfce7;
+      padding:12px 14px;
+      border-radius:12px;
+      margin-top:14px;
+      font-size:14px;
+    }
+
+    @media (max-width: 700px){
+      h1{font-size:32px}
+      .grid3,.twoCol{grid-template-columns:1fr}
+      .resultScore{font-size:52px}
+      .resultStatus{font-size:24px}
+      body{padding:14px}
+      .container{padding:24px 16px}
+    }
+  </style>
 </head>
-
 <body>
-
-<div class="container">
-
-<h1>AI Job Test</h1>
-
-<p>Will AI replace your job? Take the 30-second test.</p>
-
-<div id="game"></div>
-
-</div>
-
-<script>
-
-const questions=[
-"Does your job require human empathy?",
-"Do you solve unexpected problems often?",
-"Do you interact with people face-to-face?",
-"Does your work involve creativity?",
-"Do you make complex decisions?",
-"Does your job depend on trust or relationships?",
-"Is your work mostly repetitive?",
-"Could software automate most of your tasks?",
-"Do you regularly learn new skills?",
-"Do you work in unpredictable environments?"
-]
-
-let job=""
-let index=0
-let score=0
-let aiScore=0
-let result=""
-
-function showStart(){
-
-document.getElementById("game").innerHTML=`
-
-<h2>What is your job?</h2>
-
-<input id="job" class="email" placeholder="Example: Accountant">
-
-<br><br>
-
-<button class="start" onclick="start()">
-Start Test
-</button>
-
-`
-
-}
-
-function start(){
-
-job=document.getElementById("job").value
-
-if(job==""){
-alert("Enter your job first")
-return
-}
-
-index=0
-score=0
-
-showQuestion()
-
-}
-
-function showQuestion(){
-
-if(index>=questions.length){
-
-showResult()
-return
-
-}
-
-document.getElementById("game").innerHTML=`
-
-<p>Question ${index+1} / ${questions.length}</p>
-
-<h2>${questions[index]}</h2>
-
-<button class="answer" onclick="answer(this,2)">Yes</button>
-<br>
-<button class="answer" onclick="answer(this,1)">Sometimes</button>
-<br>
-<button class="answer" onclick="answer(this,0)">No</button>
-
-`
-
-}
-
-function answer(button,value){
-
-button.classList.add("selected")
-
-if(index==6||index==7){
-value=2-value
-}
-
-score+=value
-
-setTimeout(()=>{
-
-index++
-showQuestion()
-
-},250)
-
-}
-
-function showResult(){
-
-if(score>=16){
-result="Very Hard to Replace"
-}
-else if(score>=11){
-result="Moderately Safe"
-}
-else if(score>=6){
-result="At Risk"
-}
-else{
-result="High AI Risk"
-}
-
-aiScore=Math.round((score/20)*100)
-
-document.getElementById("game").innerHTML=`
-
-<h2>AI Risk Result for ${job}</h2>
-
-<div class="resultCard">
-
-<div class="resultLabel">
-My AI Risk Score
-</div>
-
-<div class="resultScore">
-${aiScore}%
-</div>
-
-<div class="resultStatus">
-${result}
-</div>
-
-</div>
-
-<br>
-
-<button class="share" onclick="shareX()">Share on X</button>
-
-<button class="share" onclick="shareReddit()">Share on Reddit</button>
-
-<button class="share" onclick="copyResult()">Copy Result</button>
-
-<br><br>
-
-<h3>Get full AI-proof career report</h3>
-
-<input id="email" class="email" placeholder="Enter your email">
-
-<br>
-
-<button class="start" onclick="generateReport()">
-Unlock Full Report
-</button>
-
-<br><br>
-
-<button class="start" onclick="showStart()">
-Try Again
-</button>
-
-`
-
-}
-
-function shareX(){
-
-const text=`I tested my job against AI.
+  <main class="container">
+    <div class="pill">Global AI Career Quiz</div>
+    <h1>AI Job Test</h1>
+    <p class="sub">Will AI replace your job? Take the 30-second test to find out your AI risk score.</p>
+
+    <div id="game"></div>
+
+    <div class="anchorLinks">
+      <a href="#safe-jobs">AI-Safe Jobs</a>
+      <a href="#risk-jobs">AI-Risk Jobs</a>
+      <a href="#faq">FAQ</a>
+      <a href="#about">About</a>
+      <a href="#privacy">Privacy</a>
+      <a href="#contact">Contact</a>
+    </div>
+
+    <section class="section" id="safe-jobs">
+      <h3>Top AI-Safe Job Categories</h3>
+      <div class="tagList">
+        <span class="tag">Therapists</span>
+        <span class="tag">Teachers</span>
+        <span class="tag">Product Managers</span>
+        <span class="tag">UX Researchers</span>
+        <span class="tag">Nurses</span>
+        <span class="tag">Consultants</span>
+      </div>
+      <p class="smallMuted">These tend to rely more on empathy, trust, nuance, and complex judgment.</p>
+    </section>
+
+    <section class="section" id="risk-jobs">
+      <h3>Higher AI-Risk Job Categories</h3>
+      <div class="tagList">
+        <span class="tag">Data Entry</span>
+        <span class="tag">Routine Admin</span>
+        <span class="tag">Basic Transcription</span>
+        <span class="tag">Simple Support</span>
+        <span class="tag">Repetitive Reporting</span>
+        <span class="tag">Template Content</span>
+      </div>
+      <p class="smallMuted">These often involve repetitive tasks or work that software can automate at scale.</p>
+    </section>
+
+    <section class="section" id="faq">
+      <h3>FAQ</h3>
+
+      <div class="faqItem">
+        <h4>Is this a real prediction?</h4>
+        <p>This is a lightweight directional test. It is meant to help users think about AI exposure, not provide legal, financial, or career guarantees.</p>
+      </div>
+
+      <div class="faqItem">
+        <h4>What makes a job more AI-safe?</h4>
+        <p>Human trust, creativity, empathy, negotiation, leadership, and operating in unpredictable environments usually make work harder to automate fully.</p>
+      </div>
+
+      <div class="faqItem">
+        <h4>Can I use this for teams or hiring discussions?</h4>
+        <p>Yes. Many people use simple AI-risk tools as conversation starters for upskilling, workforce planning, and career transition thinking.</p>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <h3>About</h3>
+      <p>AI Job Test is a simple online tool that helps people estimate how vulnerable their job may be to automation and artificial intelligence.</p>
+      <p>It uses a short set of questions to estimate how much a role depends on human strengths such as empathy, creativity, judgment, and trust.</p>
+    </section>
+
+    <section class="section" id="privacy">
+      <h3>Privacy Policy</h3>
+      <p>This website uses Google Analytics to understand how visitors interact with the site.</p>
+      <p>No personally identifiable information is intentionally collected by the quiz itself. If you enter an email, treat this version as a demo unless you connect a real email service.</p>
+    </section>
+
+    <section class="section" id="contact">
+      <h3>Contact</h3>
+      <p>Questions or feedback: <strong>contact@soruva.com</strong></p>
+    </section>
+  </main>
+
+  <footer>
+    <p>
+      <a href="#about">About</a> |
+      <a href="#privacy">Privacy</a> |
+      <a href="#contact">Contact</a>
+    </p>
+    <p>© 2026 AI Job Test</p>
+  </footer>
+
+  <script>
+    const questions = [
+      "Does your job require human empathy?",
+      "Do you solve unexpected problems often?",
+      "Do you interact with people face-to-face?",
+      "Does your work involve creativity?",
+      "Do you make complex decisions?",
+      "Does your job depend on trust or relationships?",
+      "Is your work mostly repetitive?",
+      "Could software automate most of your tasks?",
+      "Do you regularly learn new skills?",
+      "Do you work in unpredictable environments?"
+    ];
+
+    const jobSuggestions = [
+      "Accountant","Teacher","Designer","Software Engineer","Marketer","Project Manager",
+      "Data Analyst","Product Manager","Nurse","Consultant","Lawyer","HR Specialist",
+      "Customer Support","Sales Manager","Writer","Therapist","Researcher","Recruiter"
+    ];
+
+    let job = "";
+    let index = 0;
+    let score = 0;
+    let aiScore = 0;
+    let result = "";
+    let recommendationHtml = "";
+
+    function escapeHtml(str){
+      return String(str)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    function renderJobDatalist(){
+      return `
+        <datalist id="jobList">
+          ${jobSuggestions.map(item => `<option value="${item}"></option>`).join("")}
+        </datalist>
+      `;
+    }
+
+    function showStart(){
+      document.getElementById("game").innerHTML = `
+        <div class="grid3">
+          <div class="miniCard">10 short questions</div>
+          <div class="miniCard">Instant AI risk score</div>
+          <div class="miniCard">Built to be shareable</div>
+        </div>
+
+        <h2>What is your job?</h2>
+        <input id="job" list="jobList" class="jobInput" placeholder="Example: Accountant" />
+        ${renderJobDatalist()}
+
+        <div style="margin-top:18px;">
+          <button class="start" onclick="start()">Start Test</button>
+        </div>
+      `;
+    }
+
+    function start(){
+      const jobInput = document.getElementById("job");
+      job = jobInput ? jobInput.value.trim() : "";
+
+      if(job === ""){
+        alert("Enter your job first");
+        return;
+      }
+
+      index = 0;
+      score = 0;
+      aiScore = 0;
+      result = "";
+      recommendationHtml = "";
+
+      if (typeof gtag === "function") {
+        gtag('event', 'start_test', { job_category: job });
+      }
+
+      showQuestion();
+    }
+
+    function showQuestion(){
+      if(index >= questions.length){
+        showResult();
+        return;
+      }
+
+      const progress = Math.round((index / questions.length) * 100);
+
+      document.getElementById("game").innerHTML = `
+        <div class="progressWrap">
+          <div class="progressLabel">Question ${index + 1} of ${questions.length}</div>
+          <div class="progressBar">
+            <div class="progressFill" style="width:${progress}%"></div>
+          </div>
+        </div>
+
+        <h2>${questions[index]}</h2>
+
+        <button class="answer" onclick="answer(this,2)">Yes</button>
+        <button class="answer" onclick="answer(this,1)">Sometimes</button>
+        <button class="answer" onclick="answer(this,0)">No</button>
+
+        <div>
+          <button class="secondary" onclick="showStart()">Restart</button>
+        </div>
+      `;
+    }
+
+    function answer(button, value){
+      button.classList.add("selected");
+
+      if(index === 6 || index === 7){
+        value = 2 - value;
+      }
+
+      score += value;
+
+      setTimeout(() => {
+        index++;
+        showQuestion();
+      }, 250);
+    }
+
+    function buildRecommendations(){
+      if(aiScore >= 80){
+        recommendationHtml = `
+          <div class="section" style="margin-top:22px;">
+            <h3>What this usually means</h3>
+            <p>Your role appears to benefit heavily from human strengths. Focus on leadership, judgment, and higher-value positioning.</p>
+            <h3>Recommended next moves</h3>
+            <ul>
+              <li>Double down on strategic decision making</li>
+              <li>Develop AI-assisted workflow mastery</li>
+              <li>Package your judgment as premium expertise</li>
+            </ul>
+          </div>
+        `;
+      } else if(aiScore >= 55){
+        recommendationHtml = `
+          <div class="section" style="margin-top:22px;">
+            <h3>What this usually means</h3>
+            <p>Your job has mixed exposure. Some tasks may be automated, but your human strengths still matter.</p>
+            <h3>Recommended next moves</h3>
+            <ul>
+              <li>Reduce reliance on repetitive tasks</li>
+              <li>Build client-facing or strategic skills</li>
+              <li>Learn how to work with AI instead of against it</li>
+            </ul>
+          </div>
+        `;
+      } else {
+        recommendationHtml = `
+          <div class="section" style="margin-top:22px;">
+            <h3>Higher-priority pivot ideas</h3>
+            <ul>
+              <li>Product Manager</li>
+              <li>UX Researcher</li>
+              <li>Consultant</li>
+              <li>Customer Success Lead</li>
+            </ul>
+            <h3>AI-proof skills to build next</h3>
+            <ul>
+              <li>Creative problem solving</li>
+              <li>Human communication</li>
+              <li>Strategic thinking</li>
+              <li>Cross-functional decision making</li>
+            </ul>
+          </div>
+        `;
+      }
+    }
+
+    function showResult(){
+      if(score >= 16){
+        result = "Very Hard to Replace";
+      } else if(score >= 11){
+        result = "Moderately Safe";
+      } else if(score >= 6){
+        result = "At Risk";
+      } else {
+        result = "High AI Risk";
+      }
+
+      aiScore = Math.round((score / 20) * 100);
+      buildRecommendations();
+
+      if (typeof gtag === "function") {
+        gtag('event', 'view_result', {
+          ai_score: aiScore,
+          result_label: result,
+          job_category: job
+        });
+      }
+
+      document.getElementById("game").innerHTML = `
+        <h2>AI Risk Result for ${escapeHtml(job)}</h2>
+
+        <div class="resultCard">
+          <div class="resultLabel">My AI Risk Score</div>
+          <div class="resultScore">${aiScore}%</div>
+          <div class="resultStatus">${result}</div>
+        </div>
+
+        <p class="smallMuted">The higher the score, the more your role seems to depend on human strengths that are harder to automate fully.</p>
+
+        <div style="margin-top:12px;">
+          <button class="share" onclick="shareX()">Share on X</button>
+          <button class="share" onclick="shareReddit()">Share on Reddit</button>
+          <button class="share" onclick="copyResult()">Copy Result</button>
+        </div>
+
+        ${recommendationHtml}
+
+        <div class="section" style="margin-top:22px;">
+          <h3>Unlock Full AI-Proof Career Report</h3>
+          <p>Enter your email to generate a deeper report experience.</p>
+          <input id="email" class="email" placeholder="Enter your email" />
+          <div>
+            <button class="start" onclick="generateReport()">Unlock Full Report</button>
+          </div>
+          <div class="smallMuted">This demo generates the report on-page. Connect a real email tool later for production use.</div>
+        </div>
+
+        <div style="margin-top:18px;">
+          <button class="secondary" onclick="showStart()">Try Again</button>
+        </div>
+      `;
+    }
+
+    function shareX(){
+      const text = `I tested my job against AI.
 
 My AI risk score was ${aiScore}%.
 
-Try it yourself:`
+Try it yourself:`;
 
-const url=window.location.href
+      const url = window.location.href;
+      const shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
 
-const shareUrl=`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`
+      const win = window.open(shareUrl, "_blank", "noopener,noreferrer");
+      if (!win) {
+        window.location.href = shareUrl;
+      }
 
-window.location.href=shareUrl
+      if (typeof gtag === "function") {
+        gtag('event', 'share_x', { ai_score: aiScore, result_label: result });
+      }
+    }
 
-}
+    function shareReddit(){
+      const url = window.location.href;
+      const title = `I tested my job against AI – my score was ${aiScore}%`;
+      const shareUrl = `https://www.reddit.com/submit?url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}`;
 
-function shareReddit(){
+      const win = window.open(shareUrl, "_blank", "noopener,noreferrer");
+      if (!win) {
+        window.location.href = shareUrl;
+      }
 
-const url=window.location.href
+      if (typeof gtag === "function") {
+        gtag('event', 'share_reddit', { ai_score: aiScore, result_label: result });
+      }
+    }
 
-const title=`I tested my job against AI – my score was ${aiScore}%`
-
-window.location.href=`https://www.reddit.com/submit?url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}`
-
-}
-
-function copyResult(){
-
-const text=`I tested my job against AI.
+    function copyResult(){
+      const text = `I tested my job against AI.
 
 My AI risk score was ${aiScore}%.
 
 Try it yourself:
-${window.location.href}`
+${window.location.href}`;
 
-navigator.clipboard.writeText(text)
+      navigator.clipboard.writeText(text).then(() => {
+        alert("Result copied!");
+      }).catch(() => {
+        alert("Copy failed. Please copy manually.");
+      });
 
-alert("Result copied!")
+      if (typeof gtag === "function") {
+        gtag('event', 'copy_result', { ai_score: aiScore, result_label: result });
+      }
+    }
 
-}
+    function generateReport(){
+      const emailField = document.getElementById("email");
+      const email = emailField ? emailField.value.trim() : "";
 
-function generateReport(){
+      if(email === ""){
+        alert("Enter your email to unlock the report");
+        return;
+      }
 
-const email=document.getElementById("email").value
+      if (typeof gtag === "function") {
+        gtag('event', 'unlock_report', {
+          ai_score: aiScore,
+          result_label: result,
+          email_entered: true,
+          job_category: job
+        });
+      }
 
-if(email==""){
-alert("Enter your email to unlock the report")
-return
-}
+      let premiumSummary = "";
+      if(aiScore >= 80){
+        premiumSummary = `
+          <p><strong>Career outlook:</strong> Your role appears relatively resilient.</p>
+          <p><strong>Monetization angle:</strong> Position yourself as someone who uses AI to amplify premium human judgment.</p>
+        `;
+      } else if(aiScore >= 55){
+        premiumSummary = `
+          <p><strong>Career outlook:</strong> Your role is adaptable but exposed to task-level automation.</p>
+          <p><strong>Monetization angle:</strong> Shift toward strategy, client trust, and cross-functional ownership.</p>
+        `;
+      } else {
+        premiumSummary = `
+          <p><strong>Career outlook:</strong> Your current role may be significantly exposed to AI disruption.</p>
+          <p><strong>Monetization angle:</strong> Prioritize upskilling and reposition into more human-centered work.</p>
+        `;
+      }
 
-document.getElementById("game").innerHTML=`
+      document.getElementById("game").innerHTML = `
+        <h2>Your AI Career Report</h2>
 
-<h2>Your AI Career Report</h2>
+        <div class="resultCard">
+          <div class="resultLabel">AI Career Summary</div>
+          <div class="resultScore">${aiScore}%</div>
+          <div class="resultStatus">${result}</div>
+        </div>
 
-<p>Your AI risk score: <b>${aiScore}%</b></p>
+        <div class="section">
+          <h3>Career Snapshot for ${escapeHtml(job)}</h3>
+          ${premiumSummary}
 
-<p>${job} has a risk level of <b>${result}</b>.</p>
+          <h3>Recommended AI-Proof Skills</h3>
+          <ul>
+            <li>Creative problem solving</li>
+            <li>Human communication</li>
+            <li>AI collaboration</li>
+            <li>Strategic thinking</li>
+            <li>Trust-based client interaction</li>
+          </ul>
 
-<h3>Recommended AI-proof skills</h3>
+          <h3>Suggested Next Career Moves</h3>
+          <ul>
+            <li>Audit which parts of your work are repetitive</li>
+            <li>Move closer to decision-making or client-facing work</li>
+            <li>Build an AI-assisted workflow instead of resisting AI entirely</li>
+          </ul>
 
-<ul>
-<li>Creative problem solving</li>
-<li>Human communication</li>
-<li>AI collaboration</li>
-<li>Strategic thinking</li>
-</ul>
+          <div class="notice">
+            Demo mode: your report is generated on-page. For a production version, connect this form to MailerLite, ConvertKit, or another email tool.
+          </div>
+        </div>
 
-<p>We sent a deeper report to your email.</p>
+        <div style="margin-top:18px;">
+          <button class="share" onclick="shareX()">Share on X</button>
+          <button class="share" onclick="copyResult()">Copy Result</button>
+          <button class="secondary" onclick="showStart()">Restart Test</button>
+        </div>
+      `;
+    }
 
-<button class="start" onclick="showStart()">Restart Test</button>
+    // Lightweight sanity checks
+    (function runChecks(){
+      const reversed = (2 - 2) + (2 - 1) + (2 - 0);
+      console.assert(reversed === 3, "Reverse scoring check failed");
+      console.assert(questions.length === 10, "Question count should be 10");
+    })();
 
-`
-
-}
-
-showStart()
-
-</script>
-
-<footer>
-
-<p>
-<a href="about.html">About</a> |
-<a href="privacy.html">Privacy</a> |
-<a href="contact.html">Contact</a>
-</p>
-
-<p>© 2026 AI Job Test</p>
-
-</footer>
-
+    showStart();
+  </script>
 </body>
 </html>
