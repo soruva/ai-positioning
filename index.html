@@ -2,19 +2,22 @@
 <html>
 <head>
 
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZFVXTT26DX"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-ZFVXTT26DX');
-</script>
-  
 <meta charset="UTF-8">
-<meta name="description" content="Take a 30-second AI Job Test to see how likely your career is to be replaced by artificial intelligence.">  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>AI Job Test</title>
+
+<meta name="description" content="Take a 30-second AI Job Test to see how likely your career is to be replaced by artificial intelligence.">
+
+<!-- Google Analytics -->
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZFVXTT26DX"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config','G-ZFVXTT26DX');
+</script>
 
 <style>
 
@@ -34,6 +37,10 @@ padding:30px;
 border-radius:20px;
 }
 
+h1{
+font-size:36px;
+}
+
 button{
 padding:15px 20px;
 margin:10px;
@@ -41,6 +48,7 @@ font-size:16px;
 border:none;
 border-radius:10px;
 cursor:pointer;
+transition:0.2s;
 }
 
 .start{
@@ -57,6 +65,12 @@ width:80%;
 
 .answer:hover{
 background:#475569;
+}
+
+.selected{
+background:#ff8a80 !important;
+color:black !important;
+transform:scale(1.05);
 }
 
 .share{
@@ -78,9 +92,24 @@ margin-top:20px;
 }
 
 .score{
-font-size:40px;
+font-size:42px;
 margin:20px;
 color:#06b6d4;
+}
+
+footer{
+margin-top:40px;
+font-size:14px;
+}
+
+footer a{
+color:#94a3b8;
+text-decoration:none;
+margin:0 10px;
+}
+
+footer a:hover{
+color:white;
 }
 
 </style>
@@ -129,6 +158,7 @@ return
 
 index=0
 score=0
+
 showQuestion()
 
 }
@@ -166,29 +196,32 @@ document.getElementById("game").innerHTML=`
 
 <h2>${questions[index]}</h2>
 
-<button class="answer" onclick="answer(2)">Yes</button>
+<button class="answer" onclick="answer(this,2)">Yes</button>
 <br>
-<button class="answer" onclick="answer(1)">Sometimes</button>
+<button class="answer" onclick="answer(this,1)">Sometimes</button>
 <br>
-<button class="answer" onclick="answer(0)">No</button>
+<button class="answer" onclick="answer(this,0)">No</button>
 
 `
 
 }
 
-function answer(value){
+function answer(button,value){
+
+button.classList.add("selected")
 
 if(index==6||index==7){
-
 value=2-value
-
 }
 
 score+=value
 
-index++
+setTimeout(()=>{
 
+index++
 showQuestion()
+
+},250)
 
 }
 
@@ -197,27 +230,16 @@ function showResult(){
 let result=""
 
 if(score>=16){
-
 result="Very Hard to Replace"
-
 }
-
 else if(score>=11){
-
 result="Moderately Safe"
-
 }
-
 else if(score>=6){
-
 result="At Risk"
-
 }
-
 else{
-
 result="High AI Risk"
-
 }
 
 let aiScore=Math.round((score/20)*100)
@@ -232,6 +254,18 @@ document.getElementById("game").innerHTML=`
 
 <p>Your career AI safety score</p>
 
+<h3>Share your result</h3>
+
+<button class="share" onclick="shareX()">
+Share on X
+</button>
+
+<button class="share" onclick="shareReddit()">
+Share on Reddit
+</button>
+
+<br><br>
+
 <h3>Get full AI-proof career report</h3>
 
 <input class="email" placeholder="Enter your email">
@@ -244,12 +278,6 @@ Unlock Full Report
 
 <br><br>
 
-<button class="share" onclick="shareResult()">
-Share Result
-</button>
-
-<br>
-
 <button class="start" onclick="showStart()">
 Try Again
 </button>
@@ -258,15 +286,20 @@ Try Again
 
 }
 
-function shareResult(){
+function shareX(){
 
-const text="I tested my AI job risk. Try it yourself!"
+const text="I tested my AI job risk score. Try yours!"
+const url=window.location.href
+
+window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`)
+
+}
+
+function shareReddit(){
 
 const url=window.location.href
 
-navigator.clipboard.writeText(url)
-
-alert("Link copied! Share it on X or LinkedIn.")
+window.open(`https://www.reddit.com/submit?url=${url}&title=AI Job Test`)
 
 }
 
@@ -274,7 +307,7 @@ showStart()
 
 </script>
 
-<footer style="margin-top:40px;text-align:center;font-size:14px;">
+<footer>
 
 <p>
 <a href="about.html">About</a> |
@@ -285,6 +318,6 @@ showStart()
 <p>© 2026 AI Job Test</p>
 
 </footer>
-  
+
 </body>
 </html>
