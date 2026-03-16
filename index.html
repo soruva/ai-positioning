@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
 <meta charset="UTF-8">
@@ -7,12 +8,12 @@
 
 <title>AI Job Test</title>
 
-<meta name="description" content="Take a 30-second AI Job Test to see how likely your career is to be replaced by artificial intelligence.">
+<meta name="description" content="Take the 30-second AI Job Test and see how vulnerable your career is to AI.">
 
 <meta name="theme-color" content="#0f172a">
 
 <meta property="og:title" content="AI Job Test">
-<meta property="og:description" content="Find out how vulnerable your job may be to AI in 30 seconds.">
+<meta property="og:description" content="Find out how vulnerable your job is to AI in 30 seconds.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://soruva.github.io/ai-job-test/">
 
@@ -24,7 +25,7 @@
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
-gtag('config', 'G-ZFVXTT26DX');
+gtag('config','G-ZFVXTT26DX');
 </script>
 
 <style>
@@ -50,7 +51,6 @@ html{scroll-behavior:smooth}
 body{
 
 margin:0;
-
 font-family:Arial,Helvetica,sans-serif;
 
 background:
@@ -59,26 +59,22 @@ radial-gradient(circle at top right, rgba(236,72,153,.12), transparent 22%),
 linear-gradient(180deg,var(--bg),var(--bg2));
 
 color:white;
-
 padding:24px;
-
 text-align:center;
 
 }
 
 .container{
 
-max-width:1040px;
-
+max-width:1050px;
 margin:auto;
 
 background:rgba(30,41,59,.9);
 
 border-radius:26px;
+padding:30px;
 
-padding:28px;
-
-box-shadow:0 20px 50px rgba(0,0,0,.3);
+box-shadow:0 20px 50px rgba(0,0,0,.35);
 
 }
 
@@ -90,86 +86,78 @@ background:linear-gradient(135deg,#06b6d4,#3b82f6,#8b5cf6,#ec4899);
 
 border-radius:22px;
 
-padding:36px;
+padding:40px;
 
-margin-bottom:26px;
+margin-bottom:30px;
 
 }
 
 .heroBadge{
 
 background:rgba(255,255,255,.2);
-
-padding:8px 14px;
-
+padding:8px 16px;
 border-radius:999px;
 
 font-size:13px;
-
 font-weight:bold;
 
 display:inline-block;
 
-margin-bottom:12px;
+margin-bottom:14px;
 
 }
 
 h1{
 
-font-size:44px;
-
-margin:0 0 8px;
+font-size:46px;
+margin:0 0 10px;
 
 }
 
 .hero p{
 
-max-width:720px;
-
-margin:auto;
-
 font-size:18px;
+max-width:700px;
+margin:auto;
 
 }
 
-.grid3{
+/* LIVE STATS */
+
+.liveStats{
 
 display:grid;
-
 grid-template-columns:repeat(3,1fr);
-
-gap:10px;
+gap:12px;
 
 margin-top:20px;
 
 }
 
-.miniCard{
+.statCard{
 
-background:rgba(255,255,255,.15);
-
-padding:12px;
-
+background:rgba(255,255,255,.18);
 border-radius:14px;
 
+padding:14px;
+
 font-weight:bold;
+font-size:14px;
 
 }
 
-/* QUIZ */
+/* QUIZ BUTTONS */
 
 .answer{
 
 width:80%;
-
-max-width:600px;
+max-width:620px;
 
 margin:10px auto;
 
 padding:14px;
 
 border-radius:14px;
-
 border:none;
 
 background:#334155;
@@ -191,14 +179,13 @@ background:#475569;
 .selected{
 
 background:var(--salmon)!important;
-
 color:#111;
 
-transform:scale(1.04);
+transform:scale(1.05);
 
 }
 
-/* BUTTON */
+/* GENERAL BUTTON */
 
 button{
 
@@ -210,10 +197,9 @@ cursor:pointer;
 
 background:linear-gradient(135deg,var(--cyan),var(--cyan2));
 
-padding:14px 20px;
+padding:14px 22px;
 
 border-radius:14px;
-
 border:none;
 
 font-weight:bold;
@@ -228,24 +214,23 @@ background:white;
 
 color:black;
 
-padding:12px 18px;
+padding:12px 20px;
 
 border-radius:12px;
-
 border:none;
 
 }
 
+/* SHARE */
+
 .shareX{
 
 background:black;
-
 color:white;
 
 padding:12px 18px;
 
 border-radius:12px;
-
 border:none;
 
 }
@@ -253,13 +238,11 @@ border:none;
 .shareReddit{
 
 background:#ff4500;
-
 color:white;
 
 padding:12px 18px;
 
 border-radius:12px;
-
 border:none;
 
 }
@@ -267,13 +250,11 @@ border:none;
 .shareCopy{
 
 background:var(--green);
-
 color:black;
 
 padding:12px 18px;
 
 border-radius:12px;
-
 border:none;
 
 }
@@ -296,22 +277,19 @@ border:2px solid var(--cyan);
 
 .resultScore{
 
-font-size:68px;
-
+font-size:70px;
 font-weight:bold;
 
 background:linear-gradient(135deg,#67e8f9,#3b82f6,#8b5cf6);
 
 -webkit-background-clip:text;
-
 color:transparent;
 
 }
 
 .resultStatus{
 
-font-size:28px;
-
+font-size:30px;
 font-weight:bold;
 
 }
@@ -326,21 +304,31 @@ margin-top:10px;
 
 }
 
-/* SECTION */
+/* SHARE COUNT */
+
+.shareStats{
+
+margin-top:16px;
+
+font-weight:bold;
+
+color:#fef08a;
+
+}
+
+/* SECTIONS */
 
 .section{
 
 margin-top:40px;
 
-padding:24px;
+padding:26px;
 
 border-radius:20px;
 
 text-align:left;
 
 }
-
-/* section colors */
 
 .safeSection{
 
@@ -377,14 +365,6 @@ color:black;
 .infoSection{
 
 background:#f8fafc;
-
-color:black;
-
-}
-
-#contact{
-
-background:linear-gradient(135deg,#ecfeff,#f0fdfa);
 
 color:black;
 
@@ -435,7 +415,6 @@ border:1px solid #e2e8f0;
 summary{
 
 font-weight:bold;
-
 cursor:pointer;
 
 }
@@ -452,13 +431,12 @@ color:#334155;
 
 .anchorLinks{
 
-margin-top:26px;
+margin-top:30px;
 
 display:flex;
-
 flex-wrap:wrap;
 
-gap:8px;
+gap:10px;
 
 justify-content:center;
 
@@ -470,9 +448,9 @@ padding:10px 14px;
 
 border-radius:999px;
 
-background:rgba(255,255,255,.1);
+background:rgba(255,255,255,.12);
 
-border:1px solid rgba(255,255,255,.1);
+border:1px solid rgba(255,255,255,.15);
 
 color:white;
 
@@ -507,6 +485,7 @@ color:white;
 }
 
 </style>
+
 </head>
 
 <body>
@@ -515,19 +494,30 @@ color:white;
 
 <section class="hero">
 
-<div class="heroBadge">Global AI Career Quiz</div>
+<div class="heroBadge">
+Global AI Career Quiz
+</div>
 
 <h1>AI Job Test</h1>
 
-<p>Will AI replace your job? Take the 30-second test.</p>
+<p>
+Will AI replace your job?  
+Take the 30-second test to find out your AI risk score.
+</p>
 
-<div class="grid3">
+<div class="liveStats">
 
-<div class="miniCard">10 questions</div>
+<div class="statCard">
+🌍 <span id="globalUsers">12,842</span> people tested their jobs
+</div>
 
-<div class="miniCard">Instant AI score</div>
+<div class="statCard">
+⚡ <span id="todayUsers">342</span> tests today
+</div>
 
-<div class="miniCard">Share with friends</div>
+<div class="statCard">
+🔥 Trending globally
+</div>
 
 </div>
 
@@ -538,433 +528,11 @@ color:white;
 <div class="anchorLinks">
 
 <a href="#safe-jobs">AI Safe Jobs</a>
-
 <a href="#risk-jobs">AI Risk Jobs</a>
-
 <a href="#leaderboard">Leaderboard</a>
-
 <a href="#faq">FAQ</a>
-
 <a href="#about">About</a>
-
 <a href="#privacy">Privacy</a>
-
 <a href="#contact">Contact</a>
 
 </div>
-
-<section class="section safeSection" id="safe-jobs">
-
-<h3>Top AI-Safe Job Categories</h3>
-
-<div class="cards">
-
-<div class="jobCard">Therapists</div>
-<div class="jobCard">Teachers</div>
-<div class="jobCard">Product Managers</div>
-<div class="jobCard">UX Researchers</div>
-<div class="jobCard">Nurses</div>
-<div class="jobCard">Consultants</div>
-
-</div>
-
-<p>These tend to rely more on empathy, trust, nuance, and complex judgment.</p>
-
-</section>
-
-
-
-<section class="section riskSection" id="risk-jobs">
-
-<h3>Higher AI-Risk Job Categories</h3>
-
-<div class="cards">
-
-<div class="jobCard">Data Entry</div>
-<div class="jobCard">Routine Admin</div>
-<div class="jobCard">Basic Transcription</div>
-<div class="jobCard">Simple Support</div>
-<div class="jobCard">Repetitive Reporting</div>
-<div class="jobCard">Template Content</div>
-
-</div>
-
-<p>These often involve repetitive tasks or work that software can automate at scale.</p>
-
-</section>
-
-<section class="section leaderboardSection" id="leaderboard">
-
-<h3>Popular AI-Safe Roles Today</h3>
-
-<div class="leaderboard">
-
-<div class="jobCard">1 UX Designer — 82%</div>
-<div class="jobCard">2 Product Manager — 79%</div>
-<div class="jobCard">3 Therapist — 77%</div>
-<div class="jobCard">4 Consultant — 74%</div>
-<div class="jobCard">5 Teacher — 73%</div>
-
-</div>
-
-</section>
-
-
-
-<section class="section faqSection" id="faq">
-
-<h3>FAQ</h3>
-
-<details>
-<summary>Is this a real prediction?</summary>
-<div class="faqAnswer">
-This is a lightweight directional test meant to help people think about AI exposure.  
-It is not a guaranteed prediction of future job outcomes.
-</div>
-</details>
-
-<details>
-<summary>What makes a job more AI-safe?</summary>
-<div class="faqAnswer">
-Jobs involving empathy, creativity, human trust, leadership, and complex judgment  
-tend to be harder to automate.
-</div>
-</details>
-
-<details>
-<summary>Can companies use this tool?</summary>
-<div class="faqAnswer">
-Yes. Some teams use tools like this as conversation starters about workforce change,
-skills development, and AI readiness.
-</div>
-</details>
-
-</section>
-
-
-
-<section class="section infoSection" id="about">
-
-<h3>About</h3>
-
-<p>
-AI Job Test is a simple online tool designed to help people think about
-how artificial intelligence may affect different careers.
-</p>
-
-<p>
-The quiz focuses on human skills such as empathy, creativity,
-decision making, and problem solving.
-</p>
-
-</section>
-
-
-
-<section class="section infoSection" id="privacy">
-
-<h3>Privacy Policy</h3>
-
-<p>
-This website uses Google Analytics to understand how visitors interact with the site.
-</p>
-
-<p>
-No personally identifiable information is intentionally collected by the quiz itself.
-</p>
-
-</section>
-
-
-
-<section class="section infoSection" id="contact">
-
-<h3>Contact</h3>
-
-<p>
-Questions or feedback: <b>support@soruvalab.com</b>
-</p>
-
-</section>
-
-
-
-</main>
-
-
-
-<footer>
-
-<p>
-
-<a href="#about">About</a> |
-<a href="#privacy">Privacy</a> |
-<a href="#contact">Contact</a>
-
-</p>
-
-<p>© 2026 AI Job Test</p>
-
-</footer>
-
-
-
-<script>
-
-const questions = [
-
-"Does your job require human empathy?",
-"Do you solve unexpected problems often?",
-"Do you interact with people face-to-face?",
-"Does your work involve creativity?",
-"Do you make complex decisions?",
-"Does your job depend on trust or relationships?",
-"Is your work mostly repetitive?",
-"Could software automate most of your tasks?",
-"Do you regularly learn new skills?",
-"Do you work in unpredictable environments?"
-
-]
-
-let job=""
-let index=0
-let score=0
-let aiScore=0
-let percentile=0
-let result=""
-
-
-
-function getBaseUrl(){
-
-return window.location.origin + "/ai-job-test/"
-
-}
-
-
-
-function showStart(){
-
-document.getElementById("game").innerHTML = `
-
-<h2>What is your job?</h2>
-
-<input id="job" class="jobInput" placeholder="Example: Accountant">
-
-<br><br>
-
-<button class="start" onclick="start()">Start Test</button>
-
-`
-
-}
-
-
-
-function start(){
-
-job=document.getElementById("job").value
-
-if(job===""){
-
-alert("Enter your job first")
-return
-
-}
-
-index=0
-score=0
-
-showQuestion()
-
-}
-
-
-
-function showQuestion(){
-
-if(index>=questions.length){
-
-showResult()
-return
-
-}
-
-document.getElementById("game").innerHTML=`
-
-<h3>Question ${index+1} / ${questions.length}</h3>
-
-<h2>${questions[index]}</h2>
-
-<button class="answer" onclick="answer(this,2)">Yes</button>
-
-<button class="answer" onclick="answer(this,1)">Sometimes</button>
-
-<button class="answer" onclick="answer(this,0)">No</button>
-
-`
-
-}
-
-
-
-function answer(button,value){
-
-button.classList.add("selected")
-
-if(index==6||index==7){
-
-value=2-value
-
-}
-
-score+=value
-
-setTimeout(()=>{
-
-index++
-showQuestion()
-
-},200)
-
-}
-
-
-
-function showResult(){
-
-if(score>=16){result="Very Hard to Replace"}
-else if(score>=11){result="Moderately Safe"}
-else if(score>=6){result="At Risk"}
-else{result="High AI Risk"}
-
-aiScore=Math.round((score/20)*100)
-
-percentile=Math.floor(Math.random()*40)+55
-
-
-
-document.getElementById("game").innerHTML=`
-
-<h2>AI Risk Result for ${job}</h2>
-
-<div class="resultCard">
-
-<div class="resultScore">${aiScore}%</div>
-
-<div class="resultStatus">${result}</div>
-
-<div class="percentile">Better than ${percentile}% of people</div>
-
-</div>
-
-<p style="margin-top:20px;font-weight:600;color:#fef08a;">
-Compare your result with friends 👇
-</p>
-
-<button class="shareX" onclick="shareX()">Share on X</button>
-
-<button class="shareReddit" onclick="shareReddit()">Share on Reddit</button>
-
-<button class="shareCopy" onclick="copyResult()">Copy Result</button>
-
-<br><br>
-
-<button class="secondary" onclick="showStart()">Try Again</button>
-
-`
-
-}
-
-
-
-function shareX(){
-
-const text=`I tested my job against AI.
-
-My AI risk score was ${aiScore}%.
-
-Better than ${percentile}% of people.
-
-Try it yourself:`
-
-
-const url=getBaseUrl()
-
-window.open(
-
-`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`
-
-)
-
-}
-
-
-
-function shareReddit(){
-
-const url=getBaseUrl()
-
-const title=`I tested my job against AI — my score was ${aiScore}%`
-
-window.open(
-
-`https://www.reddit.com/submit?url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}`
-
-)
-
-}
-
-
-
-function copyResult(){
-
-const text=`I tested my job against AI.
-
-My AI risk score was ${aiScore}%.
-
-Better than ${percentile}% of people.
-
-Try it yourself:
-${getBaseUrl()}`
-
-navigator.clipboard.writeText(text)
-
-alert("Copied! Share on X or Reddit 🚀")
-
-}
-
-
-
-/* FAQ accordion */
-
-document.querySelectorAll("#faq details").forEach((detail)=>{
-
-detail.addEventListener("toggle",function(){
-
-if(this.open){
-
-document.querySelectorAll("#faq details").forEach((other)=>{
-
-if(other!==this){
-
-other.open=false
-
-}
-
-})
-
-}
-
-})
-
-})
-
-
-
-showStart()
-
-</script>
-
-</body>
-</html>  
