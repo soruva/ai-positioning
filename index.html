@@ -1133,5 +1133,166 @@ ${getResultURL()}`;
         });
       }
     }
+
+    function downloadShareCard(){
+      const canvas = document.createElement("canvas");
+      canvas.width = 1000;
+      canvas.height = 560;
+      const ctx = canvas.getContext("2d");
+
+      const gradient = ctx.createLinearGradient(0, 0, 1000, 560);
+      gradient.addColorStop(0, "#0f172a");
+      gradient.addColorStop(0.5, "#1d4ed8");
+      gradient.addColorStop(1, "#7c3aed");
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, 1000, 560);
+
+      ctx.fillStyle = "#ffffff";
+      ctx.font = "bold 42px Arial";
+      ctx.fillText("AI Job Test", 50, 80);
+
+      ctx.font = "bold 32px Arial";
+      ctx.fillText(job, 50, 140);
+
+      ctx.font = "bold 150px Arial";
+      ctx.fillStyle = "#67e8f9";
+      ctx.fillText(aiScore + "%", 50, 310);
+
+      ctx.fillStyle = "#ffffff";
+      ctx.font = "bold 40px Arial";
+      ctx.fillText(result, 50, 390);
+
+      ctx.font = "28px Arial";
+      ctx.fillText(`Better than ${percentile}% of people`, 50, 445);
+
+      ctx.fillStyle = "#cbd5e1";
+      ctx.font = "24px Arial";
+      ctx.fillText("AI Risk Analysis", 620, 120);
+      ctx.fillText("• Automation exposure", 620, 180);
+      ctx.fillText("• Future job stability", 620, 220);
+      ctx.fillText("• Skill adaptation need", 620, 260);
+
+      ctx.fillStyle = "#fde047";
+      ctx.font = "bold 28px Arial";
+      ctx.fillText("Try it yourself →", 620, 340);
+
+      ctx.fillStyle = "#ffffff";
+      ctx.font = "20px Arial";
+      ctx.fillText("soruva.github.io/ai-job-test/", 620, 380);
+
+      const link = document.createElement("a");
+      link.download = "ai-risk-score.png";
+      link.href = canvas.toDataURL();
+      link.click();
+
+      if(typeof gtag === "function"){
+        gtag("event", "download_share_card", {
+          ai_score: aiScore,
+          result_label: result
+        });
+      }
+    }
+
+    function tryAnotherJob(){
+      window.scrollTo({top:0, behavior:"smooth"});
+      window.history.replaceState({}, document.title, getBaseUrl());
+      showStart();
+    }
+
+    function showSharedResultFromURL(){
+      const params = new URLSearchParams(window.location.search);
+      const sharedJob = params.get("job");
+      const sharedScore = params.get("score");
+
+      if(!sharedJob || !sharedScore){
+        return false;
+      }
+
+      job = sharedJob.trim();
+      aiScore = Number(sharedScore);
+
+      if(Number.isNaN(aiScore)){
+        return false;
+      }
+
+      result = getResultLabelFromScore(aiScore);
+      percentile = Math.floor(Math.random() * 40) + 55;
+
+      const game = document.getElementById("game");
+      if(!game) return false;
+
+      game.innerHTML = `
+        <div class="alert-bar">🔥 Shared result</div>
+
+        <h2>AI Risk Result for ${safeText(job)}</h2>
+
+        <div class="result-card">
+          <div class="result-label">AI Risk Score</div>
+          <div class="result-score">${aiScore}%</div>
+          <div class="result-status">${result}</div>
+          <div class="percentile">Better than ${percentile}% of people</div>
+        </div>
+
+        <p class="supporting-line">Global average AI risk: 58%</p>
+
+        <p style="margin-top:16px;font-weight:600;color:#fef08a;">
+          Try your own test 👇
+        </p>
+
+        <button class="btn-primary" onclick="tryAnotherJob()">Start Your Test</button>
+      `;
+
+      return true;
+    }
+
+    function initFAQAccordion(){
+      document.querySelectorAll("#faq details").forEach(detail => {
+        detail.addEventListener("toggle", function(){
+          if(this.open){
+            document.querySelectorAll("#faq details").forEach(other => {
+              if(other !== this){
+                other.open = false;
+              }
+            });
+          }
+        });
+      });
+    }
+
+    function initLiveCounters(){
+      let users = 12842;
+      let today = 342;
+      let shareCount = 4281;
+
+      setInterval(() => {
+        users += Math.floor(Math.random() * 3);
+        today += Math.floor(Math.random() * 2);
+
+        const globalEl = document.getElementById("globalUsers");
+        const todayEl = document.getElementById("todayUsers");
+
+        if(globalEl) globalEl.textContent = users.toLocaleString();
+        if(todayEl) todayEl.textContent = today.toLocaleString();
+      }, 4000);
+
+      setInterval(() => {
+        shareCount += Math.floor(Math.random() * 2);
+
+        const shareEl = document.getElementById("shareCount");
+        if(shareEl) shareEl.textContent = shareCount.toLocaleString();
+      }, 5000);
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      initFAQAccordion();
+      initLiveCounters();
+
+      if(!showSharedResultFromURL()){
+        showStart();
+      }
+    });
+  </script>
+</body>
+</html>
   
   
