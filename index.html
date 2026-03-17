@@ -556,6 +556,11 @@
      .learning-box ul {
      padding-left: 18px;
     }
+
+    .safe-section,
+    .risk-section {
+      color: #0f172a;
+    }
   </style>
 </head>
 
@@ -1065,12 +1070,14 @@
       return `
         <div class="section dark-info-section" style="margin-top:22px;">
           <h3>People with your score are learning</h3>
-          <ul>
-            <li>AI tool workflows</li>
-            <li>Data analysis fundamentals</li>
-            <li>Communication and strategic thinking</li>
-          </ul>
-        </div>
+
+          <div class="learning-box">
+            <ul>
+              <li>AI tool workflows</li>
+              <li>Data analysis fundamentals</li>
+              <li>Communication and strategic thinking</li>
+            </ul>
+          </div>
       `;
     }
 
