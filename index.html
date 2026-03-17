@@ -16,7 +16,6 @@
   <meta property="og:url" content="https://soruva.github.io/ai-job-test/" />
   <meta property="og:image" content="https://soruva.github.io/ai-job-test/og-image.png" />
 
-  <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZFVXTT26DX"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -30,32 +29,20 @@
       --bg:#0f172a;
       --bg2:#111827;
       --panel:rgba(30,41,59,.92);
-
       --cyan:#06b6d4;
       --cyan2:#67e8f9;
-      --blue:#3b82f6;
-      --violet:#8b5cf6;
-      --pink:#ec4899;
-
       --salmon:#ff8a80;
       --green:#22c55e;
       --yellow:#fde047;
-
       --safe1:#bfdbfe;
       --safe2:#dbeafe;
-
       --risk1:#fecaca;
       --risk2:#fee2e2;
-
       --leader1:#c4b5fd;
       --leader2:#ddd6fe;
-
       --faq:#cbd5e1;
-      --info:#f8fafc;
-
       --text:#ffffff;
       --textDark:#0f172a;
-      --muted:#334155;
     }
 
     *{box-sizing:border-box}
@@ -348,14 +335,6 @@
       background:var(--faq);
     }
 
-    .infoSection{
-      background:var(--info);
-    }
-
-    #contact{
-      background:linear-gradient(135deg,#ecfeff,#f0fdfa);
-    }
-
     .cards{
       display:grid;
       grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
@@ -432,26 +411,16 @@
 
     <section class="hero">
       <div class="heroBadge">Global AI Career Quiz</div>
-
       <h1>AI Job Test</h1>
-
       <p>
         Will AI replace your job?
         Take the 30-second test to find out your AI risk score.
       </p>
 
       <div class="liveStats">
-        <div class="statCard">
-          🌍 <span id="globalUsers">12,842</span> people tested their jobs
-        </div>
-
-        <div class="statCard">
-          ⚡ <span id="todayUsers">342</span> tests today
-        </div>
-
-        <div class="statCard">
-          🔥 Trending globally
-        </div>
+        <div class="statCard">🌍 <span id="globalUsers">12,842</span> people tested their jobs</div>
+        <div class="statCard">⚡ <span id="todayUsers">342</span> tests today</div>
+        <div class="statCard">🔥 Trending globally</div>
       </div>
     </section>
 
@@ -463,7 +432,7 @@
       <a href="#leaderboard">Leaderboard</a>
       <a href="#faq">FAQ</a>
       <a href="about.html">About</a>
-      <a href="#privacy">Privacy</a>
+      <a href="privacy.html">Privacy</a>
       <a href="contact.html">Contact</a>
     </div>
 
@@ -532,35 +501,12 @@
       </details>
     </section>
 
-    <section class="section infoSection" id="about">
-      <h3>About</h3>
-      <p>
-        AI Job Test is a lightweight tool that helps people estimate how vulnerable
-        their job might be to artificial intelligence.
-      </p>
-      <p>
-        The quiz focuses on human strengths such as creativity,
-        judgment, empathy and complex decision-making.
-      </p>
-    </section>
-
-    <section class="section infoSection" id="privacy">
-      <h3>Privacy Policy</h3>
-      <p>This site uses Google Analytics to understand visitor behaviour.</p>
-      <p>No personal information is intentionally collected by this quiz.</p>
-    </section>
-
-    <section class="section infoSection" id="contact">
-      <h3>Contact</h3>
-      <p>Questions or feedback: <b>support@soruvalab.com</b></p>
-    </section>
-
   </main>
 
   <footer>
     <p>
       <a href="about.html">About</a> |
-      <a href="#privacy">Privacy</a> |
+      <a href="privacy.html">Privacy</a> |
       <a href="contact.html">Contact</a>
     </p>
     <p>© 2026 AI Job Test</p>
@@ -580,6 +526,21 @@
       "Do you work in unpredictable environments?"
     ];
 
+    const jobRiskMap = {
+      "software engineer": 45,
+      "teacher": 28,
+      "designer": 41,
+      "accountant": 62,
+      "lawyer": 38,
+      "marketing manager": 39,
+      "consultant": 36,
+      "nurse": 24,
+      "product manager": 31,
+      "ux designer": 35,
+      "data analyst": 48,
+      "customer support": 67
+    };
+
     let job = "";
     let index = 0;
     let score = 0;
@@ -598,6 +559,55 @@
         .replaceAll(">","&gt;")
         .replaceAll('"',"&quot;")
         .replaceAll("'","&#039;");
+    }
+
+    function normalizeJob(value){
+      return String(value || "").trim().toLowerCase();
+    }
+
+    function getJobRiskComparisonHTML(){
+      const normalized = normalizeJob(job);
+      const currentKnownScore = jobRiskMap[normalized];
+      const currentDisplay = typeof currentKnownScore === "number" ? currentKnownScore : aiScore;
+
+      return `
+        <div class="section" style="margin-top:22px;background:#f8fafc;color:#0f172a;">
+          <h3>Compare your job with others</h3>
+          <div class="cards">
+            <div class="jobCard">${safeText(job)} — ${currentDisplay}%</div>
+            <div class="jobCard">Teacher — 28%</div>
+            <div class="jobCard">Designer — 41%</div>
+            <div class="jobCard">Software Engineer — 45%</div>
+            <div class="jobCard">Accountant — 62%</div>
+            <div class="jobCard">Lawyer — 38%</div>
+          </div>
+        </div>
+      `;
+    }
+
+    function getCareerTipsHTML(){
+      return `
+        <div class="section" style="margin-top:22px;background:#f8fafc;color:#0f172a;">
+          <h3>AI-Proof Career Tips</h3>
+          <ul>
+            <li>Focus on human skills like empathy, leadership, and trust.</li>
+            <li>Learn to collaborate with AI tools instead of avoiding them.</li>
+            <li>Build creative and strategic thinking into your daily work.</li>
+          </ul>
+        </div>
+      `;
+    }
+
+    function getReportCTAHTML(){
+      return `
+        <div class="section" style="margin-top:22px;background:#f8fafc;color:#0f172a;">
+          <h3>Send me my AI career report</h3>
+          <p>Get a deeper AI career breakdown, skill roadmap, and next-step ideas.</p>
+          <input id="emailInput" class="jobInput" placeholder="Enter your email" />
+          <br><br>
+          <button class="start" onclick="sendCareerReport()">Send Report</button>
+        </div>
+      `;
     }
 
     function showStart(){
@@ -708,6 +718,10 @@
       }
 
       document.getElementById("game").innerHTML = `
+        <div style="background:#7c2d12;padding:10px;border-radius:10px;font-weight:700;margin-bottom:12px;">
+          🔥 AI disruption is accelerating globally
+        </div>
+
         <h2>AI Risk Result for ${safeText(job)}</h2>
 
         <div class="resultCard">
@@ -719,7 +733,7 @@
         <p class="compareLine">Global average AI risk: 58%</p>
 
         <p style="margin-top:16px;font-weight:600;color:#fef08a;">
-          Compare your result with friends 👇
+          Challenge your friends 👇
         </p>
 
         <div class="shareRow">
@@ -733,10 +747,24 @@
           🔥 <span id="shareCount">4,281</span> people shared their score
         </div>
 
-        <br>
+        <p style="margin-top:10px;color:#cbd5e1;font-size:14px;word-break:break-all;">
+          Shareable result URL: ${safeText(buildResultURL())}
+        </p>
 
+        ${getJobRiskComparisonHTML()}
+        ${getCareerTipsHTML()}
+        ${getReportCTAHTML()}
+
+        <br>
         <button class="secondary" onclick="showStart()">Try Again</button>
       `;
+    }
+
+    function buildResultURL(){
+      const params = new URLSearchParams();
+      params.set("job", job);
+      params.set("score", aiScore);
+      return `${getBaseUrl()}?${params.toString()}`;
     }
 
     function shareX(){
@@ -746,131 +774,4 @@ My AI risk score was ${aiScore}%.
 
 Better than ${percentile}% of people.
 
-Try it yourself:`;
-
-      const url = getBaseUrl();
-      const shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
-
-      const win = window.open(shareUrl, "_blank", "noopener,noreferrer");
-      if (!win) {
-        window.location.href = shareUrl;
-      }
-
-      if (typeof gtag === "function") {
-        gtag('event','share_x',{ai_score: aiScore, result_label: result});
-      }
-    }
-
-    function shareReddit(){
-      const url = getBaseUrl();
-      const title = `I tested my job against AI — my score was ${aiScore}%`;
-      const shareUrl = `https://www.reddit.com/submit?url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}`;
-
-      const win = window.open(shareUrl, "_blank", "noopener,noreferrer");
-      if (!win) {
-        window.location.href = shareUrl;
-      }
-
-      if (typeof gtag === "function") {
-        gtag('event','share_reddit',{ai_score: aiScore, result_label: result});
-      }
-    }
-
-    function copyResult(){
-      const text = `I tested my job against AI.
-
-My AI risk score was ${aiScore}%.
-
-Better than ${percentile}% of people.
-
-Try it yourself:
-${getBaseUrl()}`;
-
-      navigator.clipboard.writeText(text)
-        .then(() => {
-          alert("Copied! Share it 🚀");
-        })
-        .catch(() => {
-          alert("Copy failed. Please copy manually.");
-        });
-
-      if (typeof gtag === "function") {
-        gtag('event','copy_result',{ai_score: aiScore, result_label: result});
-      }
-    }
-
-    function downloadCard(){
-      const canvas = document.createElement("canvas");
-      canvas.width = 800;
-      canvas.height = 420;
-
-      const ctx = canvas.getContext("2d");
-
-      ctx.fillStyle = "#0f172a";
-      ctx.fillRect(0, 0, 800, 420);
-
-      ctx.fillStyle = "#ffffff";
-      ctx.font = "bold 42px Arial";
-      ctx.fillText("AI Job Test", 40, 80);
-
-      ctx.font = "bold 120px Arial";
-      ctx.fillStyle = "#67e8f9";
-      ctx.fillText(aiScore + "%", 40, 220);
-
-      ctx.font = "bold 36px Arial";
-      ctx.fillStyle = "#ffffff";
-      ctx.fillText(result, 40, 300);
-
-      ctx.font = "22px Arial";
-      ctx.fillText("ai-job-test", 40, 360);
-
-      const link = document.createElement("a");
-      link.download = "ai-risk-score.png";
-      link.href = canvas.toDataURL();
-      link.click();
-
-      if (typeof gtag === "function") {
-        gtag('event','download_share_card',{ai_score: aiScore, result_label: result});
-      }
-    }
-
-    let users = 12842;
-    let today = 342;
-
-    setInterval(() => {
-      users += Math.floor(Math.random() * 3);
-      today += Math.floor(Math.random() * 2);
-
-      const globalEl = document.getElementById("globalUsers");
-      const todayEl = document.getElementById("todayUsers");
-
-      if(globalEl){ globalEl.innerText = users.toLocaleString(); }
-      if(todayEl){ todayEl.innerText = today.toLocaleString(); }
-    }, 4000);
-
-    let shareCount = 4281;
-
-    setInterval(() => {
-      shareCount += Math.floor(Math.random() * 2);
-      const el = document.getElementById("shareCount");
-      if(el){
-        el.innerText = shareCount.toLocaleString();
-      }
-    }, 5000);
-
-    document.querySelectorAll("#faq details").forEach((d) => {
-      d.addEventListener("toggle", function(){
-        if(this.open){
-          document.querySelectorAll("#faq details").forEach((o) => {
-            if(o !== this){
-              o.open = false;
-            }
-          });
-        }
-      });
-    });
-
-    showStart();
-  </script>
-</body>
-</html>
+Try it 
