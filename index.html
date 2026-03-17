@@ -5,13 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>AI Job Test</title>
-  <meta name="description" content="Take the 30-second AI Job Test and see how vulnerable your career is to AI." />
+  <meta
+    name="description"
+    content="Take the 30-second AI Job Test and see how vulnerable your career is to AI."
+  />
   <meta name="theme-color" content="#0f172a" />
 
   <link rel="canonical" href="https://soruva.github.io/ai-job-test/" />
 
   <meta property="og:title" content="AI Job Test" />
-  <meta property="og:description" content="Find out how vulnerable your job is to AI in 30 seconds." />
+  <meta
+    property="og:description"
+    content="Find out how vulnerable your job is to AI in 30 seconds."
+  />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://soruva.github.io/ai-job-test/" />
   <meta property="og:image" content="https://soruva.github.io/ai-job-test/og-image.png" />
@@ -20,8 +26,8 @@
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config','G-ZFVXTT26DX');
+    gtag("js", new Date());
+    gtag("config", "G-ZFVXTT26DX");
   </script>
 
   <style>
@@ -29,11 +35,18 @@
       --bg:#0f172a;
       --bg2:#111827;
       --panel:rgba(30,41,59,.92);
+      --panel-dark:#0b1220;
+
       --cyan:#06b6d4;
       --cyan2:#67e8f9;
+      --blue:#3b82f6;
+      --violet:#8b5cf6;
+      --pink:#ec4899;
       --salmon:#ff8a80;
+      --salmon2:#ffb199;
       --green:#22c55e;
       --yellow:#fde047;
+
       --safe1:#bfdbfe;
       --safe2:#dbeafe;
       --risk1:#fecaca;
@@ -41,8 +54,11 @@
       --leader1:#c4b5fd;
       --leader2:#ddd6fe;
       --faq:#cbd5e1;
+      --info:#f8fafc;
+
       --text:#ffffff;
       --textDark:#0f172a;
+      --muted:#334155;
     }
 
     *{box-sizing:border-box}
@@ -67,12 +83,13 @@
       border-radius:28px;
       padding:30px;
       box-shadow:0 20px 50px rgba(0,0,0,.35);
+      overflow:hidden;
     }
 
     .hero{
       background:linear-gradient(135deg,#06b6d4,#3b82f6,#8b5cf6,#ec4899);
       border-radius:24px;
-      padding:40px 24px;
+      padding:42px 24px;
       margin-bottom:28px;
       box-shadow:0 16px 36px rgba(59,130,246,.25);
     }
@@ -86,6 +103,7 @@
       font-size:13px;
       font-weight:700;
       margin-bottom:14px;
+      letter-spacing:.03em;
     }
 
     h1{
@@ -98,6 +116,7 @@
       font-size:18px;
       max-width:760px;
       margin:0 auto;
+      line-height:1.6;
     }
 
     .liveStats{
@@ -113,6 +132,7 @@
       padding:14px;
       font-weight:700;
       font-size:14px;
+      backdrop-filter:blur(6px);
     }
 
     .anchorLinks{
@@ -138,7 +158,8 @@
       background:rgba(255,255,255,.2);
     }
 
-    .jobInput{
+    .jobInput,
+    .emailInput{
       padding:14px;
       border-radius:12px;
       border:none;
@@ -150,7 +171,7 @@
     button{
       cursor:pointer;
       border:none;
-      transition:.2s ease;
+      transition:.18s ease;
     }
 
     button:hover{
@@ -164,6 +185,7 @@
       font-weight:700;
       color:black;
       font-size:16px;
+      margin:6px;
     }
 
     .secondary{
@@ -173,29 +195,34 @@
       border-radius:12px;
       font-weight:700;
       font-size:15px;
+      margin:6px;
     }
 
     .answer{
-      width:80%;
-      max-width:620px;
+      display:block;
+      width:100%;
+      max-width:560px;
       margin:10px auto;
       padding:14px;
       border-radius:14px;
       background:#334155;
       color:white;
       font-size:16px;
-      display:block;
+      transition:all .15s ease;
     }
 
     .answer:hover{
       background:#475569;
+      transform:translateY(-2px);
     }
 
     .selected{
-      background:var(--salmon)!important;
+      background:linear-gradient(135deg,var(--salmon),var(--salmon2))!important;
       color:#111!important;
-      transform:scale(1.05);
-      box-shadow:0 0 0 4px rgba(255,138,128,.22);
+      transform:scale(1.06);
+      box-shadow:
+        0 0 0 4px rgba(255,138,128,0.25),
+        0 10px 25px rgba(0,0,0,0.35);
     }
 
     .progressWrap{
@@ -214,10 +241,9 @@
     .progressBar{
       width:100%;
       height:14px;
-      background:#0b1220;
+      background:#1e293b;
       border-radius:999px;
       overflow:hidden;
-      border:1px solid rgba(255,255,255,.08);
     }
 
     .progressFill{
@@ -228,12 +254,20 @@
     }
 
     .resultCard{
-      background:#0b1220;
+      background:var(--panel-dark);
       border-radius:20px;
       padding:26px;
       margin-top:20px;
       border:2px solid var(--cyan);
       box-shadow:0 8px 24px rgba(0,0,0,.18);
+    }
+
+    .resultLabel{
+      color:#cbd5e1;
+      font-size:13px;
+      font-weight:700;
+      text-transform:uppercase;
+      letter-spacing:.08em;
     }
 
     .resultScore{
@@ -244,6 +278,7 @@
       background-clip:text;
       color:transparent;
       line-height:1;
+      margin-top:8px;
     }
 
     .resultStatus{
@@ -269,40 +304,42 @@
       margin-top:16px;
     }
 
-    .shareX{
-      background:black;
-      color:white;
+    .shareX,
+    .shareReddit,
+    .shareCopy{
       padding:12px 18px;
       border-radius:12px;
       font-weight:700;
       font-size:15px;
       margin:6px;
+    }
+
+    .shareX{
+      background:black;
+      color:white;
     }
 
     .shareReddit{
       background:#ff4500;
       color:white;
-      padding:12px 18px;
-      border-radius:12px;
-      font-weight:700;
-      font-size:15px;
-      margin:6px;
     }
 
     .shareCopy{
       background:var(--green);
       color:black;
-      padding:12px 18px;
-      border-radius:12px;
-      font-weight:700;
-      font-size:15px;
-      margin:6px;
     }
 
     .shareStats{
       margin-top:16px;
       font-weight:700;
       color:#fef08a;
+    }
+
+    .shareUrl{
+      margin-top:10px;
+      color:#cbd5e1;
+      font-size:14px;
+      word-break:break-all;
     }
 
     .section{
@@ -335,6 +372,10 @@
       background:var(--faq);
     }
 
+    .inlineInfoSection{
+      background:var(--info);
+    }
+
     .cards{
       display:grid;
       grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
@@ -347,6 +388,23 @@
       padding:14px;
       border-radius:14px;
       text-align:center;
+      font-weight:700;
+      box-shadow:0 4px 12px rgba(0,0,0,.06);
+    }
+
+    .leaderboardList{
+      display:grid;
+      gap:10px;
+      margin-top:16px;
+    }
+
+    .leaderboardItem{
+      background:white;
+      border-radius:14px;
+      padding:14px 16px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
       font-weight:700;
       box-shadow:0 4px 12px rgba(0,0,0,.06);
     }
@@ -375,6 +433,20 @@
       line-height:1.6;
     }
 
+    ul{
+      margin:10px 0 0 20px;
+      padding:0;
+      line-height:1.7;
+    }
+
+    .trendAlert{
+      background:#7c2d12;
+      padding:10px;
+      border-radius:10px;
+      font-weight:700;
+      margin-bottom:12px;
+    }
+
     footer{
       margin-top:40px;
       font-size:14px;
@@ -398,10 +470,11 @@
       .hero{padding:30px 16px}
       .liveStats{grid-template-columns:1fr}
       .answer{width:100%}
-      .jobInput{width:100%}
+      .jobInput,.emailInput{width:100%}
       .cards{grid-template-columns:repeat(2,1fr)}
       .resultScore{font-size:58px}
       .resultStatus{font-size:24px}
+      .leaderboardItem{font-size:14px}
     }
   </style>
 </head>
@@ -464,12 +537,12 @@
 
     <section class="section leaderboardSection" id="leaderboard">
       <h3>Most Tested Jobs Today</h3>
-      <div class="cards">
-        <div class="jobCard">1 Software Engineer</div>
-        <div class="jobCard">2 Marketing Manager</div>
-        <div class="jobCard">3 Teacher</div>
-        <div class="jobCard">4 Designer</div>
-        <div class="jobCard">5 Consultant</div>
+      <div class="leaderboardList">
+        <div class="leaderboardItem"><span>1. Software Engineer</span><span>82%</span></div>
+        <div class="leaderboardItem"><span>2. Marketing Manager</span><span>79%</span></div>
+        <div class="leaderboardItem"><span>3. Teacher</span><span>73%</span></div>
+        <div class="leaderboardItem"><span>4. Designer</span><span>71%</span></div>
+        <div class="leaderboardItem"><span>5. Consultant</span><span>69%</span></div>
       </div>
     </section>
 
@@ -500,278 +573,3 @@
         </div>
       </details>
     </section>
-
-  </main>
-
-  <footer>
-    <p>
-      <a href="about.html">About</a> |
-      <a href="privacy.html">Privacy</a> |
-      <a href="contact.html">Contact</a>
-    </p>
-    <p>© 2026 AI Job Test</p>
-  </footer>
-
-  <script>
-    const questions = [
-      "Does your job require human empathy?",
-      "Do you solve unexpected problems often?",
-      "Do you interact with people face-to-face?",
-      "Does your work involve creativity?",
-      "Do you make complex decisions?",
-      "Does your job depend on trust or relationships?",
-      "Is your work mostly repetitive?",
-      "Could software automate most of your tasks?",
-      "Do you regularly learn new skills?",
-      "Do you work in unpredictable environments?"
-    ];
-
-    const jobRiskMap = {
-      "software engineer": 45,
-      "teacher": 28,
-      "designer": 41,
-      "accountant": 62,
-      "lawyer": 38,
-      "marketing manager": 39,
-      "consultant": 36,
-      "nurse": 24,
-      "product manager": 31,
-      "ux designer": 35,
-      "data analyst": 48,
-      "customer support": 67
-    };
-
-    let job = "";
-    let index = 0;
-    let score = 0;
-    let aiScore = 0;
-    let percentile = 0;
-    let result = "";
-
-    function getBaseUrl(){
-      return window.location.origin + "/ai-job-test/";
-    }
-
-    function safeText(value){
-      return String(value)
-        .replaceAll("&","&amp;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;")
-        .replaceAll("'","&#039;");
-    }
-
-    function normalizeJob(value){
-      return String(value || "").trim().toLowerCase();
-    }
-
-    function getJobRiskComparisonHTML(){
-      const normalized = normalizeJob(job);
-      const currentKnownScore = jobRiskMap[normalized];
-      const currentDisplay = typeof currentKnownScore === "number" ? currentKnownScore : aiScore;
-
-      return `
-        <div class="section" style="margin-top:22px;background:#f8fafc;color:#0f172a;">
-          <h3>Compare your job with others</h3>
-          <div class="cards">
-            <div class="jobCard">${safeText(job)} — ${currentDisplay}%</div>
-            <div class="jobCard">Teacher — 28%</div>
-            <div class="jobCard">Designer — 41%</div>
-            <div class="jobCard">Software Engineer — 45%</div>
-            <div class="jobCard">Accountant — 62%</div>
-            <div class="jobCard">Lawyer — 38%</div>
-          </div>
-        </div>
-      `;
-    }
-
-    function getCareerTipsHTML(){
-      return `
-        <div class="section" style="margin-top:22px;background:#f8fafc;color:#0f172a;">
-          <h3>AI-Proof Career Tips</h3>
-          <ul>
-            <li>Focus on human skills like empathy, leadership, and trust.</li>
-            <li>Learn to collaborate with AI tools instead of avoiding them.</li>
-            <li>Build creative and strategic thinking into your daily work.</li>
-          </ul>
-        </div>
-      `;
-    }
-
-    function getReportCTAHTML(){
-      return `
-        <div class="section" style="margin-top:22px;background:#f8fafc;color:#0f172a;">
-          <h3>Send me my AI career report</h3>
-          <p>Get a deeper AI career breakdown, skill roadmap, and next-step ideas.</p>
-          <input id="emailInput" class="jobInput" placeholder="Enter your email" />
-          <br><br>
-          <button class="start" onclick="sendCareerReport()">Send Report</button>
-        </div>
-      `;
-    }
-
-    function showStart(){
-      document.getElementById("game").innerHTML = `
-        <h2>What is your job?</h2>
-
-        <input id="job" list="jobs" class="jobInput" placeholder="Example: Software Engineer">
-
-        <datalist id="jobs">
-          <option>Software Engineer</option>
-          <option>Teacher</option>
-          <option>Designer</option>
-          <option>Marketing Manager</option>
-          <option>Consultant</option>
-          <option>Nurse</option>
-          <option>Product Manager</option>
-          <option>Accountant</option>
-          <option>Lawyer</option>
-          <option>UX Designer</option>
-          <option>Data Analyst</option>
-          <option>Customer Support</option>
-        </datalist>
-
-        <br><br>
-
-        <button class="start" onclick="start()">Start Test</button>
-      `;
-
-      document.getElementById("job").addEventListener("keypress", function(e){
-        if(e.key === "Enter"){
-          start();
-        }
-      });
-    }
-
-    function start(){
-      job = document.getElementById("job").value.trim();
-
-      if(job === ""){
-        alert("Enter your job first");
-        return;
-      }
-
-      index = 0;
-      score = 0;
-
-      if (typeof gtag === "function") {
-        gtag('event','start_test',{job_category:job});
-      }
-
-      showQuestion();
-    }
-
-    function showQuestion(){
-      if(index >= questions.length){
-        showResult();
-        return;
-      }
-
-      const progress = Math.round((index / questions.length) * 100);
-
-      document.getElementById("game").innerHTML = `
-        <div class="progressWrap">
-          <div class="progressLabel">Question ${index + 1} / ${questions.length}</div>
-          <div class="progressBar">
-            <div class="progressFill" style="width:${progress}%"></div>
-          </div>
-        </div>
-
-        <h2>${questions[index]}</h2>
-
-        <button class="answer" onclick="answer(this,2)">Yes</button>
-        <button class="answer" onclick="answer(this,1)">Sometimes</button>
-        <button class="answer" onclick="answer(this,0)">No</button>
-      `;
-    }
-
-    function answer(btn, val){
-      btn.classList.add("selected");
-
-      if(index === 6 || index === 7){
-        val = 2 - val;
-      }
-
-      score += val;
-
-      setTimeout(() => {
-        index++;
-        showQuestion();
-      }, 200);
-    }
-
-    function showResult(){
-      if(score >= 16){ result = "Very Hard to Replace"; }
-      else if(score >= 11){ result = "Moderately Safe"; }
-      else if(score >= 6){ result = "At Risk"; }
-      else { result = "High AI Risk"; }
-
-      aiScore = Math.round((score / 20) * 100);
-      percentile = Math.floor(Math.random() * 40) + 55;
-
-      if (typeof gtag === "function") {
-        gtag('event','view_result',{
-          ai_score: aiScore,
-          result_label: result,
-          job_category: job
-        });
-      }
-
-      document.getElementById("game").innerHTML = `
-        <div style="background:#7c2d12;padding:10px;border-radius:10px;font-weight:700;margin-bottom:12px;">
-          🔥 AI disruption is accelerating globally
-        </div>
-
-        <h2>AI Risk Result for ${safeText(job)}</h2>
-
-        <div class="resultCard">
-          <div class="resultScore">${aiScore}%</div>
-          <div class="resultStatus">${result}</div>
-          <div class="percentile">Better than ${percentile}% of people</div>
-        </div>
-
-        <p class="compareLine">Global average AI risk: 58%</p>
-
-        <p style="margin-top:16px;font-weight:600;color:#fef08a;">
-          Challenge your friends 👇
-        </p>
-
-        <div class="shareRow">
-          <button class="shareX" onclick="shareX()">Share on X</button>
-          <button class="shareReddit" onclick="shareReddit()">Share on Reddit</button>
-          <button class="shareCopy" onclick="copyResult()">Copy Result</button>
-          <button class="start" onclick="downloadCard()">Download Share Card</button>
-        </div>
-
-        <div class="shareStats">
-          🔥 <span id="shareCount">4,281</span> people shared their score
-        </div>
-
-        <p style="margin-top:10px;color:#cbd5e1;font-size:14px;word-break:break-all;">
-          Shareable result URL: ${safeText(buildResultURL())}
-        </p>
-
-        ${getJobRiskComparisonHTML()}
-        ${getCareerTipsHTML()}
-        ${getReportCTAHTML()}
-
-        <br>
-        <button class="secondary" onclick="showStart()">Try Again</button>
-      `;
-    }
-
-    function buildResultURL(){
-      const params = new URLSearchParams();
-      params.set("job", job);
-      params.set("score", aiScore);
-      return `${getBaseUrl()}?${params.toString()}`;
-    }
-
-    function shareX(){
-      const text = `I tested my job against AI.
-
-My AI risk score was ${aiScore}%.
-
-Better than ${percentile}% of people.
-
-Try it 
