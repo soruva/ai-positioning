@@ -726,6 +726,440 @@ background:linear-gradient(135deg,var(--safe1),var(--safe2));
           <button class="start" onclick="sendCareerReport()">Send Report</button>
         </div>
       `;
-    }      
+    }
+
+    function getResultURL(){
+      const params = new URLSearchParams();
+      params.set("job", job);
+      params.set("score", aiScore);
+      return `${getBaseUrl()}?${params.toString()}`;
+    }
+
+    function showStart(){
+      const game = document.getElementById("game");
+      if(!game) return;
+
+      game.innerHTML = `
+        <h2>What is your job?</h2>
+
+        <input id="job" list="jobs" class="jobInput" placeholder="Example: Software Engineer" />
+
+        <datalist id="jobs">
+          <option>Software Engineer</option>
+          <option>Teacher</option>
+          <option>Designer</option>
+          <option>Marketing Manager</option>
+          <option>Consultant</option>
+          <option>Nurse</option>
+          <option>Product Manager</option>
+          <option>Accountant</option>
+          <option>Lawyer</option>
+          <option>UX Designer</option>
+          <option>Data Analyst</option>
+          <option>Customer Support</option>
+        </datalist>
+
+        <br><br>
+
+        <button class="start" onclick="startTest()">Start Test</button>
+      `;
+
+      const jobInput = document.getElementById("job");
+      if(jobInput){
+        jobInput.addEventListener("keypress", function(e){
+          if(e.key === "Enter"){
+            startTest();
+          }
+        });
+      }
+    }
+
+    function startTest(){
+      const jobInput = document.getElementById("job");
+      job = jobInput ? jobInput.value.trim() : "";
+
+      if(job === ""){
+        alert("Please enter your job.");
+        return;
+      }
+
+      index = 0;
+      score = 0;
+
+      if (typeof gtag === "function") {
+        gtag("event","start_test",{job_category:job});
+      }
+
+      showQuestion();
+    }
+
+    function showQuestion(){
+      const game = document.getElementById("game");
+      if(!game) return;
+
+      if(index >= questions.length){
+        showResult();
+        return;
+      }
+
+      const progress = Math.round((index / questions.length) * 100);
+
+      game.innerHTML = `
+        <div class="progressWrap">
+          <div class="progressLabel">Question ${index + 1} / ${questions.length}</div>
+          <div class="progressBar">
+            <div class="progressFill" style="width:${progress}%"></div>
+          </div>
+        </div>
+
+        <h2>${questions[index]}</h2>
+
+        <button class="answer" onclick="answerQuestion(this,2)">Yes</button>
+        <button class="answer" onclick="answerQuestion(this,1)">Sometimes</button>
+        <button class="answer" onclick="answerQuestion(this,0)">No</button>
+      `;
+    }
+
+    function answerQuestion(button, value){
+      if(navigator.vibrate){
+        navigator.vibrate(15);
+      }
+
+      button.classList.add("selected");
+
+      if(index === 6 || index === 7){
+        value = 2 - value;
+      }
+
+      score += value;
+
+      setTimeout(() => {
+        index++;
+        showQuestion();
+      }, 200);
+    }
+
+    function showResult(){
+      aiScore = Math.round((score / 20) * 100);
+      percentile = Math.floor(Math.random() * 40) + 55;
+      result = getResultLabelFromScore(aiScore);
+
+      if (typeof gtag === "function") {
+        gtag("event","view_result",{
+          ai_score: aiScore,
+          result_label: result,
+          job_category: job
+        });
+      }
+
+      const game = document.getElementById("game");
+      if(!game) return;
+
+      game.innerHTML = `
+        <div class="trendAlert">🔥 AI disruption is accelerating globally</div>
+
+        <h2>AI Risk Result for ${safeText(job)}</h2>
+
+        <div class="resultCard">
+          <div class="resultLabel">AI Risk Score</div>
+          <div class="resultScore" id="animatedScore">0%</div>
+          <div class="resultStatus">${result}</div>
+          <div class="percentile">Better than ${percentile}% of people</div>
+        </div>
+
+        <p class="scarcity">Only 3% of people score above 80%.</p>
+
+        <p class="compareLine">Global average AI risk: 58%</p>
+
+        <p style="margin-top:16px;font-weight:600;color:#fef08a;">
+          Challenge your friends 👇
+        </p>
+
+        <div class="shareRow">
+          <button class="shareX" onclick="shareX()">Share on X</button>
+          <button class="shareReddit" onclick="shareReddit()">Share on Reddit</button>
+          <button class="shareCopy" onclick="copyResult()">Copy Result</button>
+          <button class="start" onclick="downloadShareCard()">Download Share Card</button>
+        </div>
+
+        <div class="shareStats">
+          🔥 <span id="shareCount">4,281</span> people shared their score
+        </div>
+
+        <p class="shareUrl">${safeText(getResultURL())}</p>
+
+        ${getJobRiskComparisonHTML()}
+        ${getCareerTipsHTML()}
+        ${getReportCTAHTML()}
+
+        <br>
+
+        <button class="secondary" onclick="tryAnotherJob()">
+          Test Another Job
+        </button>
+      `;
+
+      animateScore(aiScore);
+    }
+
+    function animateScore(targetScore){
+      const scoreEl = document.getElementById("animatedScore");
+      if(!scoreEl) return;
+
+      let current = 0;
+      const step = Math.max(1, Math.ceil(targetScore / 40));
+
+      const timer = setInterval(() => {
+        current += step;
+        if(current >= targetScore){
+          current = targetScore;
+          clearInterval(timer);
+        }
+        scoreEl.textContent = `${current}%`;
+      }, 16);
+    }
+
+    function resetToStart(){
+      window.history.replaceState({}, document.title, getBaseUrl());
+      showStart();
+    }
+
+    function tryAnotherJob(){
+      window.scrollTo({top:0, behavior:"smooth"});
+      resetToStart();
+    }
+
+    function shareX(){
+      const text = `${getViralText()}
+
+My AI risk score was ${aiScore}%.
+
+Better than ${percentile}% of people.
+
+Try it yourself:`;
+
+      const url = getResultURL();
+      const shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+
+      const win = window.open(shareUrl, "_blank", "noopener,noreferrer");
+      if (!win) {
+        window.location.href = shareUrl;
+      }
+
+      if (typeof gtag === "function") {
+        gtag("event","share_x",{ai_score: aiScore, result_label: result});
+      }
+    }
+
+    function shareReddit(){
+      const url = getResultURL();
+      const title = `I tested my job against AI — my score was ${aiScore}%`;
+      const shareUrl = `https://www.reddit.com/submit?url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}`;
+
+      const win = window.open(shareUrl, "_blank", "noopener,noreferrer");
+      if (!win) {
+        window.location.href = shareUrl;
+      }
+
+      if (typeof gtag === "function") {
+        gtag("event","share_reddit",{ai_score: aiScore, result_label: result});
+      }
+    }
+
+    function copyResult(){
+      const text = `${getViralText()}
+
+My AI risk score was ${aiScore}%.
+
+Better than ${percentile}% of people.
+
+Try it yourself:
+${getResultURL()}`;
+
+      navigator.clipboard.writeText(text)
+        .then(() => {
+          alert("Copied!");
+        })
+        .catch(() => {
+          alert("Copy failed. Please copy manually.");
+        });
+
+      if (typeof gtag === "function") {
+        gtag("event","copy_result",{ai_score: aiScore, result_label: result});
+      }
+    }
+
+    function downloadShareCard(){
+      const canvas = document.createElement("canvas");
+      canvas.width = 1000;
+      canvas.height = 560;
+
+      const ctx = canvas.getContext("2d");
+
+      const gradient = ctx.createLinearGradient(0, 0, 1000, 560);
+      gradient.addColorStop(0, "#0f172a");
+      gradient.addColorStop(0.5, "#1d4ed8");
+      gradient.addColorStop(1, "#7c3aed");
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, 1000, 560);
+
+      ctx.fillStyle = "#ffffff";
+      ctx.font = "bold 42px Arial";
+      ctx.fillText("AI Job Test", 50, 80);
+
+      ctx.font = "bold 32px Arial";
+      ctx.fillText(job, 50, 140);
+
+      ctx.font = "bold 150px Arial";
+      ctx.fillStyle = "#67e8f9";
+      ctx.fillText(aiScore + "%", 50, 310);
+
+      ctx.fillStyle = "#ffffff";
+      ctx.font = "bold 40px Arial";
+      ctx.fillText(result, 50, 390);
+
+      ctx.font = "28px Arial";
+      ctx.fillText(`Better than ${percentile}% of people`, 50, 445);
+
+      ctx.fillStyle = "#cbd5e1";
+      ctx.font = "24px Arial";
+      ctx.fillText("AI Risk Analysis", 620, 120);
+      ctx.fillText("• Automation exposure", 620, 180);
+      ctx.fillText("• Future job stability", 620, 220);
+      ctx.fillText("• Skill adaptation need", 620, 260);
+
+      ctx.fillStyle = "#fde047";
+      ctx.font = "bold 28px Arial";
+      ctx.fillText("Try it yourself →", 620, 340);
+
+      ctx.fillStyle = "#ffffff";
+      ctx.font = "20px Arial";
+      ctx.fillText("soruva.github.io/ai-job-test/", 620, 380);
+
+      const link = document.createElement("a");
+      link.download = "ai-risk-score.png";
+      link.href = canvas.toDataURL();
+      link.click();
+
+      if (typeof gtag === "function") {
+        gtag("event","download_share_card",{ai_score: aiScore, result_label: result});
+      }
+    }
+
+    function sendCareerReport(){
+      const emailField = document.getElementById("emailInput");
+      const email = emailField ? emailField.value.trim() : "";
+
+      if(email === ""){
+        alert("Please enter your email.");
+        return;
+      }
+
+      alert("Thanks! Connect a real email service later to make this live.");
+
+      if (typeof gtag === "function") {
+        gtag("event","send_report_click",{
+          email_entered: true,
+          ai_score: aiScore,
+          result_label: result
+        });
+      }
+    }
+
+    function showSharedResultFromURL(){
+      const params = new URLSearchParams(window.location.search);
+      const sharedJob = params.get("job");
+      const sharedScore = params.get("score");
+
+      if(!sharedJob || !sharedScore){
+        return false;
+      }
+
+      job = sharedJob.trim();
+      aiScore = Number(sharedScore);
+
+      if(Number.isNaN(aiScore)){
+        return false;
+      }
+
+      result = getResultLabelFromScore(aiScore);
+      percentile = Math.floor(Math.random() * 40) + 55;
+
+      const game = document.getElementById("game");
+      if(!game) return false;
+
+      game.innerHTML = `
+        <div class="trendAlert">🔥 Shared result</div>
+
+        <h2>AI Risk Result for ${safeText(job)}</h2>
+
+        <div class="resultCard">
+          <div class="resultLabel">AI Risk Score</div>
+          <div class="resultScore">${aiScore}%</div>
+          <div class="resultStatus">${result}</div>
+          <div class="percentile">Better than ${percentile}% of people</div>
+        </div>
+
+        <p class="compareLine">Global average AI risk: 58%</p>
+
+        <p style="margin-top:16px;font-weight:600;color:#fef08a;">
+          Try your own test 👇
+        </p>
+
+        <button class="start" onclick="resetToStart()">Start Your Test</button>
+      `;
+
+      return true;
+    }
+
+    function initFAQAccordion(){
+      document.querySelectorAll("#faq details").forEach((detail) => {
+        detail.addEventListener("toggle", function(){
+          if(this.open){
+            document.querySelectorAll("#faq details").forEach((other) => {
+              if(other !== this){
+                other.open = false;
+              }
+            });
+          }
+        });
+      });
+    }
+
+    function initLiveCounters(){
+      let users = 12842;
+      let today = 342;
+      let shareCount = 4281;
+
+      setInterval(() => {
+        users += Math.floor(Math.random() * 3);
+        today += Math.floor(Math.random() * 2);
+
+        const globalEl = document.getElementById("globalUsers");
+        const todayEl = document.getElementById("todayUsers");
+
+        if(globalEl) globalEl.textContent = users.toLocaleString();
+        if(todayEl) todayEl.textContent = today.toLocaleString();
+      }, 4000);
+
+      setInterval(() => {
+        shareCount += Math.floor(Math.random() * 2);
+
+        const shareEl = document.getElementById("shareCount");
+        if(shareEl) shareEl.textContent = shareCount.toLocaleString();
+      }, 5000);
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      initFAQAccordion();
+      initLiveCounters();
+
+      if(!showSharedResultFromURL()){
+        showStart();
+      }
+    });
+  </script>
+</body>
+</html>
       
     
