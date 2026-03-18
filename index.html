@@ -166,7 +166,7 @@
     }
 
     .input,
-    .job-input,
+    .role-input,
     .email-input{
       padding:14px;
       border-radius:12px;
@@ -184,7 +184,7 @@
     }
 
     .email-input:focus,
-    .job-input:focus{
+    .role-input:focus{
       outline:none;
       box-shadow:0 0 0 3px rgba(6,182,212,.25);
     }
@@ -432,7 +432,7 @@
       justify-content:center;
     }
 
-    .job-card{
+    .role-card{
       background:rgba(255,255,255,0.15);
       color:white;
       border:1px solid rgba(255,255,255,0.25);
@@ -541,7 +541,7 @@
       .hero{padding:30px 16px}
       .live-stats{grid-template-columns:1fr}
       .answer{width:100%}
-      .job-input,.email-input{width:100%}
+      .role-input,.email-input{width:100%}
       .cards{grid-template-columns:repeat(2,1fr)}
       .result-score{font-size:58px}
       .result-status{font-size:24px}
@@ -567,8 +567,8 @@
       color: #0f172a;
     }  
       
-    .safe-section .job-card,
-    .risk-section .job-card {
+    .safe-section .role-card,
+    .risk-section .role-card {
       color: #0f172a;
       background: rgba(255,255,255,0.7);
     }
@@ -613,8 +613,8 @@
     <div id="game" class="quiz-shell"></div>
 
     <div class="nav-links">
-      <a href="#safe-jobs">High-Leverage Roles</a>
-      <a href="#risk-jobs">At-Risk Roles</a>
+      <a href="#safe-roles">High-Leverage Roles</a>
+      <a href="#risk-roles">At-Risk Roles</a>
       <a href="#leaderboard">Leaderboard</a>
       <a href="#faq">FAQ</a>
       <a href="about.html">About</a>
@@ -622,34 +622,34 @@
       <a href="contact.html">Contact</a>
     </div>
 
-    <section class="section safe-section" id="safe-jobs">
+    <section class="section safe-section" id="safe-roles">
       <h3>High-Leverage Positions in the AI Economy</h3>
       <div class="cards">
-        <div class="job-card">Therapists</div>
-        <div class="job-card">Teachers</div>
-        <div class="job-card">Product Managers</div>
-        <div class="job-card">UX Researchers</div>
-        <div class="job-card">Nurses</div>
-        <div class="job-card">Consultants</div>
+        <div class="role-card">Therapists</div>
+        <div class="role-card">Teachers</div>
+        <div class="role-card">Product Managers</div>
+        <div class="role-card">UX Researchers</div>
+        <div class="role-card">Nurses</div>
+        <div class="role-card">Consultants</div>
       </div>
       <p>These roles rely more on empathy, trust, creativity and complex judgment.</p>
     </section>
 
-    <section class="section risk-section" id="risk-jobs">
+    <section class="section risk-section" id="risk-roles">
       <h3>Declining Positions in the AI Economy</h3>
       <div class="cards">
-        <div class="job-card">Data Entry</div>
-        <div class="job-card">Routine Admin</div>
-        <div class="job-card">Basic Transcription</div>
-        <div class="job-card">Simple Support</div>
-        <div class="job-card">Repetitive Reporting</div>
-        <div class="job-card">Template Content</div>
+        <div class="role-card">Data Entry</div>
+        <div class="role-card">Routine Admin</div>
+        <div class="role-card">Basic Transcription</div>
+        <div class="role-card">Simple Support</div>
+        <div class="role-card">Repetitive Reporting</div>
+        <div class="role-card">Template Content</div>
       </div>
       <p>These tasks often involve repetition that software can automate.</p>
     </section>
 
     <section class="section leader-section" id="leaderboard">
-      <h3>Most Tested Jobs Today</h3>
+      <h3>Most Tested roles Today</h3>
       <div class="leaderboard-list">
         <div class="leaderboard-item"><span>1. Software Engineer</span><span>82%</span></div>
         <div class="leaderboard-item"><span>2. Marketing Manager</span><span>79%</span></div>
@@ -673,7 +673,7 @@
       <details>
         <summary>What creates strong positioning in the AI economy?</summary>
         <div class="faq-answer">
-          Jobs requiring empathy, leadership, creativity, negotiation and strategic thinking tend to be harder for AI to automate fully.
+          roles requiring empathy, leadership, creativity, negotiation and strategic thinking tend to be harder for AI to automate fully.
         </div>
       </details>
 
@@ -697,19 +697,19 @@
 
   <script>
     const questions = [
-      "Does your job require human empathy?",
+      "Does your role require human empathy?",
       "Do you solve unexpected problems often?",
       "Do you interact with people face-to-face?",
       "Does your work involve creativity?",
       "Do you make complex decisions?",
-      "Does your job depend on trust or relationships?",
+      "Does your role depend on trust or relationships?",
       "Is your work mostly repetitive?",
       "Could software automate most of your tasks?",
       "Do you regularly learn new skills?",
       "Do you work in unpredictable environments?"
     ];
 
-    const jobRiskMap = {
+    const roleRiskMap = {
       "software engineer": 45,
       "teacher": 28,
       "designer": 41,
@@ -726,7 +726,7 @@
 
     const paidCheckoutUrl = "#";
 
-    let job = "";
+    let role = "";
     let index = 0;
     let score = 0;
     let aiScore = 0;
@@ -746,15 +746,15 @@
         .replaceAll("'","&#039;");
     }
 
-    function normalizeJob(value){
+    function normalizerole(value){
       return String(value || "").trim().toLowerCase();
     }
 
     function getResultLabelFromScore(scoreValue){
-      if(scoreValue >= 80) return "Very Hard to Replace";
-      if(scoreValue >= 60) return "Moderately Safe";
-      if(scoreValue >= 40) return "At Risk";
-      return "High AI Risk";
+      if(scoreValue >= 80) return "Strong Position";
+      if(scoreValue >= 60) return "Advantage Position";
+      if(scoreValue >= 40) return "Transitional Position";
+      return "Vulnerable Position";
     }
 
     function getViralText(){
@@ -788,7 +788,7 @@
 
     function getResultURL(){
       const params = new URLSearchParams();
-      params.set("job", job);
+      params.set("role", role);
       params.set("score", aiScore);
       return `${getBaseUrl()}?${params.toString()}`;
     }
@@ -808,9 +808,9 @@
       game.innerHTML = `
         <h2>What is your current role?</h2>
 
-        <input id="job" list="jobs" class="job-input" placeholder="Example: Software Engineer" />
+        <input id="role" list="roles" class="role-input" placeholder="Example: Software Engineer" />
 
-        <datalist id="jobs">
+        <datalist id="roles">
           <option>Software Engineer</option>
           <option>Teacher</option>
           <option>Designer</option>
@@ -830,9 +830,9 @@
         <button class="btn-primary" onclick="startTest()">Start Analysis</button>
       `;
 
-      const jobInput = document.getElementById("job");
-      if(jobInput){
-        jobInput.addEventListener("keypress", function(e){
+      const roleInput = document.getElementById("role");
+      if(roleInput){
+        roleInput.addEventListener("keypress", function(e){
           if(e.key === "Enter"){
             startTest();
           }
@@ -841,11 +841,11 @@
     }
 
     function startTest(){
-      const jobInput = document.getElementById("job");
-      job = jobInput ? jobInput.value.trim() : "";
+      const roleInput = document.getElementById("role");
+      role = roleInput ? roleInput.value.trim() : "";
 
-      if(job === ""){
-        alert("Please enter your job.");
+      if(role === ""){
+        alert("Please enter your role.");
         return;
       }
 
@@ -853,7 +853,7 @@
       score = 0;
 
       if(typeof gtag === "function"){
-        gtag("event", "start_analysis", { job_category: job });
+        gtag("event", "start_analysis", { role_category: role });
       }
 
       showQuestion();
@@ -914,7 +914,7 @@
         gtag("event", "view_result", {
           ai_score: aiScore,
           result_label: result,
-          job_category: job
+          role_category: role
         });
       }
 
@@ -929,7 +929,7 @@
         <h2>Your Position in the AI Economy</h2>
 
         <p style="font-weight:bold;">
-        ${safeText(job)}
+        ${safeText(role)}
         </p>
 
         <div class="result-card">
@@ -956,12 +956,12 @@
         <div class="result-message">
 
         <p style="color:#fca5a5;font-weight:bold;">
-          Your job is changing faster than most people realize.<br>
+          Your role is changing faster than most people realize.<br>
           Most people won't adapt in time.
         </p>
 
         <p class="cta-title">
-          AI will not replace jobs.<br>
+          AI will not replace roles.<br>
           It will replace people who don't adapt.
         </p>
 
@@ -997,7 +997,7 @@
 
         <br>
 
-        <button class="btn-secondary" onclick="tryAnotherJob()">Test Another Job</button>
+        <button class="btn-secondary" onclick="tryAnotherrole()">Test Another role</button>
       `;
 
       animateScore(aiScore);
@@ -1046,7 +1046,7 @@
         </div>
 
         <p style="color:#fca5a5;font-weight:bold;margin-top:18px;">
-          Your job is changing faster than most people realize.<br>
+          Your role is changing faster than most people realize.<br>
           Most people won't adapt in time.
         </p>
 
@@ -1083,20 +1083,20 @@
     }
 
     function buildComparisonSection(){
-      const normalized = normalizeJob(job);
-      const currentKnownScore = jobRiskMap[normalized];
+      const normalized = normalizerole(role);
+      const currentKnownScore = roleRiskMap[normalized];
       const currentDisplay = typeof currentKnownScore === "number" ? currentKnownScore : aiScore;
 
       return `
         <div class="section dark-info-section" style="margin-top:22px;">
           <h3>Compare positions in the AI economy</h3>
           <div class="cards">
-            <div class="job-card">${safeText(job)}  ${currentDisplay}%</div>
-            <div class="job-card">Teacher  28%</div>
-            <div class="job-card">Designer  41%</div>
-            <div class="job-card">Software Engineer  45%</div>
-            <div class="job-card">Accountant  62%</div>
-            <div class="job-card">Lawyer  38%</div>
+            <div class="role-card">${safeText(role)}  ${currentDisplay}%</div>
+            <div class="role-card">Teacher  28%</div>
+            <div class="role-card">Designer  41%</div>
+            <div class="role-card">Software Engineer  45%</div>
+            <div class="role-card">Accountant  62%</div>
+            <div class="role-card">Lawyer  38%</div>
           </div>
         </div>
       `;
@@ -1224,7 +1224,7 @@ ${getResultURL()}`;
       ctx.fillText("AI Positioning", 50, 80);
 
       ctx.font = "bold 32px Arial";
-      ctx.fillText(job, 50, 140);
+      ctx.fillText(role, 50, 140);
 
       ctx.font = "bold 150px Arial";
       ctx.fillStyle = "#67e8f9";
@@ -1241,7 +1241,7 @@ ${getResultURL()}`;
       ctx.font = "24px Arial";
       ctx.fillText("AI Position Analysis", 620, 120);
       ctx.fillText("• Automation exposure", 620, 180);
-      ctx.fillText("• Future job stability", 620, 220);
+      ctx.fillText("• Future role stability", 620, 220);
       ctx.fillText("• Skill adaptation need", 620, 260);
 
       ctx.fillStyle = "#fde047";
@@ -1265,7 +1265,7 @@ ${getResultURL()}`;
       }
     }
 
-    function tryAnotherJob(){
+    function tryAnotherrole(){
       window.scrollTo({top:0, behavior:"smooth"});
       window.history.replaceState({}, document.title, getBaseUrl());
       showStart();
@@ -1273,14 +1273,14 @@ ${getResultURL()}`;
 
     function showSharedResultFromURL(){
       const params = new URLSearchParams(window.location.search);
-      const sharedJob = params.get("job");
+      const sharedrole = params.get("role");
       const sharedScore = params.get("score");
 
-      if(!sharedJob || !sharedScore){
+      if(!sharedrole || !sharedScore){
         return false;
       }
 
-      job = sharedJob.trim();
+      role = sharedrole.trim();
       aiScore = Number(sharedScore);
 
       if(Number.isNaN(aiScore)){
@@ -1299,7 +1299,7 @@ ${getResultURL()}`;
         <h2>Your Position in the AI Economy</h2>
 
         <p style="font-weight:bold;">
-        ${safeText(job)}
+        ${safeText(role)}
         </p>
 
         <div class="result-card">
@@ -1315,7 +1315,7 @@ ${getResultURL()}`;
           Try your own test 👇
         </p>
 
-        <button class="btn-primary" onclick="tryAnotherJob()">Start Your Test</button>
+        <button class="btn-primary" onclick="tryAnotherrole()">Start Your Test</button>
       `;
 
       return true;
