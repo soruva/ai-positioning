@@ -733,7 +733,7 @@
     let result = "";
 
     function getBaseUrl(){
-      return window.location.origin + "/ai-job-test/";
+      return window.location.origin + "/ai-positioning/";
     }
 
     function safeText(value){
@@ -793,10 +793,10 @@
     }
 
     function saveEmailLocally(email){
-      const saved = JSON.parse(localStorage.getItem("aiJobTestEmails") || "[]");
+      const saved = JSON.parse(localStorage.getItem("aipositioningEmails") || "[]");
       if(!saved.includes(email)){
         saved.push(email);
-        localStorage.setItem("aiJobTestEmails", JSON.stringify(saved));
+        localStorage.setItem("aipositioningEmails", JSON.stringify(saved));
       }
     }
 
@@ -1249,7 +1249,7 @@ ${getResultURL()}`;
 
       ctx.fillStyle = "#ffffff";
       ctx.font = "20px Arial";
-      ctx.fillText("soruva.github.io/ai-job-test/", 620, 380);
+      ctx.fillText("soruva.github.io/ai-positioning/", 620, 380);
 
       const link = document.createElement("a");
       link.download = "ai-position-score.png";
