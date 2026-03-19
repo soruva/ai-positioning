@@ -746,7 +746,7 @@
         .replaceAll("'","&#039;");
     }
 
-    function normalizerole(value){
+    function normalizeRole(value){
       return String(value || "").trim().toLowerCase();
     }
 
@@ -1083,7 +1083,7 @@
     }
 
     function buildComparisonSection(){
-      const normalized = normalizerole(role);
+      const normalized = normalizeRole(role);
       const currentKnownScore = roleRiskMap[normalized];
       const currentDisplay = typeof currentKnownScore === "number" ? currentKnownScore : aiScore;
 
