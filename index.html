@@ -1393,22 +1393,38 @@ ${getResultURL()}`;
         if(shareEl) shareEl.textContent = shareCount.toLocaleString();
       }, 5000);
     }
+      
+    function initFAQAccordion(){
+      const detailsList = document.querySelectorAll("#faq details");
 
-    window.addEventListener("DOMContentLoaded", () => {
-      initFAQAccordion();
-      initLiveCounters();
+      detailsList.forEach(detail => {
+        const summary = detail.querySelector("summary");
+
+        summary.addEventListener("click", function(e){
+          e.preventDefault();
+
+          const isOpen = detail.open;
+
+          detailsList.forEach(d => d.open = false);
+
+          if(!isOpen){
+            detail.open = true;
+          }
+        });
+      });
 
       document.addEventListener("click", function(e){
         const faq = document.getElementById("faq");
 
-        if(!faq) return;
-
         if(!faq.contains(e.target)){
-          document.querySelectorAll("#faq details").forEach(d => {
-            d.open = false;
-          });
+          detailsList.forEach(d => d.open = false);
         }
       });
+     }
+    window.addEventListener("DOMContentLoaded", () => {
+      initFAQAccordion();
+      initLiveCounters();
+
 
       if(!showSharedResultFromURL()){
         showStart();
