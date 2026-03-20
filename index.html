@@ -1052,42 +1052,99 @@
       game.innerHTML = `
         <h2>Your AI Positioning Report</h2>
 
-        <p style="font-weight:bold;">
-          Based on your current position (${aiScore}%)
-        </p>
-
-        <p style="color:#fde047;font-weight:bold;">
-          What you unlock:
-        </p>
-
         <div class="preview-box">
+
+          <p><strong>Your Position Score:</strong> ${aiScore}% (${result})</p>
+
+          <hr>
+
+          <h3>1. Your Risk Timeline</h3>
+          <p>
+            ${
+              aiScore < 40
+                ? "High disruption risk within 1–2 years."
+                : aiScore < 70
+                ? "Moderate shift expected within 2–4 years."
+                : "Low disruption risk. Strong position for 3–5+ years."
+            }
+          </p>
+
+          <h3>2. What This Means</h3>
+          <p>
+            ${
+              aiScore < 40
+                ? "Your role is highly exposed to automation. Immediate repositioning is critical."
+                : aiScore < 70
+                ? "Your role is evolving. Strategic skill shifts will determine your future position."
+                : "Your role has strong human leverage. Focus on amplification, not replacement."
+            }
+          </p>
+
+          <h3>3. Your Next Moves</h3>
           <ul>
-            <li>Your exact next moves in the AI economy</li>
-            <li>What skills to focus on (and what to ignore)</li>
-            <li>Your risk timeline (when your role starts shifting)</li>
-            <li>How to stay ahead before most people react</li>
-          </ul>
-        </div>
+            ${
+              aiScore < 40
+                ? `
+              <li>Learn AI-assisted workflows immediately</li>
+              <li>Shift toward decision-making responsibilities</li>
+              <li>Reduce reliance on repetitive tasks</li>
+            `
+          : aiScore < 70
+          ? `
+        <li>Integrate AI tools into your daily work</li>
+        <li>Develop strategic thinking and communication</li>
+        <li>Position yourself closer to decision layers</li>
+      `
+          : `
+        <li>Leverage AI to scale your output</li>
+        <li>Strengthen leadership and influence</li>
+        <li>Expand into higher-value decision roles</li>
+      `
+      }
+    </ul>
 
-        <p style="color:#fca5a5;font-weight:bold;margin-top:18px;">
-          Your role is changing faster than most people realize.<br>
-          Most people won't adapt in time.
-        </p>
+    <h3>4. Skills to Focus On</h3>
+    <ul>
+      ${
+        aiScore < 40
+          ? `
+        <li>AI tools (ChatGPT, automation tools)</li>
+        <li>Data literacy</li>
+        <li>Problem-solving</li>
+      `
+          : aiScore < 70
+          ? `
+        <li>AI collaboration</li>
+        <li>Analytical thinking</li>
+        <li>Communication</li>
+      `
+          : `
+        <li>Leadership</li>
+        <li>Strategy</li>
+        <li>Creative direction</li>
+      `
+      }
+    </ul>
 
-        <p class="small-note">
-          Full report reveals your true position, leverage potential, and strategic path.
-        </p>
+  </div>
 
-        <br>
+  <!-- 🔥 ここがCVトリガー -->
+  <p style="color:#fde047;font-weight:bold;margin-top:18px;">
+    Your score shows where you are.<br>
+    This report shows what to do next.
+  </p>
 
-        <button id="unlockBtn" class="btn-primary" onclick="unlockFullReport()">
-          Unlock Full Report ($5)
-        </button>
+  <br>
 
-        <br><br>
+  <button id="unlockBtn" class="btn-primary" onclick="unlockFullReport()">
+    Unlock Full Report ($5)
+  </button>
 
-        <button class="btn-secondary" onclick="showResult()">Back to Result</button>
-      `;
+  <br><br>
+
+  <button class="btn-secondary" onclick="showResult()">Back to Result</button>
+`;
+      
     　setTimeout(() => {
         const btn = document.getElementById("unlockBtn");
 
