@@ -1087,6 +1087,12 @@
 
         <button class="btn-secondary" onclick="showResult()">Back to Result</button>
       `;
+    setTimeout(() => {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    }, 50);  
     }
 
     function unlockFullReport(){
