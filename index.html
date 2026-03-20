@@ -1054,12 +1054,12 @@
 
         <div class="preview-box">
 
-          <p><strong>Your Position Score:</strong> ${aiScore}% (${result})</p>
+        <p><strong>Your Position Score:</strong> ${aiScore}% (${result})</p>
 
-          <hr>
+        <hr>
 
-          <h3>1. Your Risk Timeline</h3>
-          <p>
+        <h3>1. Your Risk Timeline</h3>
+        <p>
             ${
               aiScore < 40
                 ? "High disruption risk within 1–2 years."
@@ -1067,10 +1067,10 @@
                 ? "Moderate shift expected within 2–4 years."
                 : "Low disruption risk. Strong position for 3–5+ years."
             }
-          </p>
+        </p>
 
-          <h3>2. What This Means</h3>
-          <p>
+        <h3>2. What This Means</h3>
+        <p>
             ${
               aiScore < 40
                 ? "Your role is highly exposed to automation. Immediate repositioning is critical."
@@ -1078,55 +1078,23 @@
                 ? "Your role is evolving. Strategic skill shifts will determine your future position."
                 : "Your role has strong human leverage. Focus on amplification, not replacement."
             }
-          </p>
+        </p>
 
-          <h3>3. Your Next Moves</h3>
-          <ul>
-            ${
-              aiScore < 40
-                ? `
-              <li>Learn AI-assisted workflows immediately</li>
-              <li>Shift toward decision-making responsibilities</li>
-              <li>Reduce reliance on repetitive tasks</li>
-            `
-          : aiScore < 70
-          ? `
-        <li>Integrate AI tools into your daily work</li>
-        <li>Develop strategic thinking and communication</li>
-        <li>Position yourself closer to decision layers</li>
-      `
-          : `
-        <li>Leverage AI to scale your output</li>
-        <li>Strengthen leadership and influence</li>
-        <li>Expand into higher-value decision roles</li>
-      `
-      }
-    </ul>
+        <h3>3. Your Next Moves</h3>
+        <ul>
+            <li>Leverage AI to scale your output</li>
+            <li>Strengthen leadership and influence</li>
+            <li>...and 2 more strategic moves</li>
+        </ul>
 
-    <h3>4. Skills to Focus On</h3>
-    <ul>
-      ${
-        aiScore < 40
-          ? `
-        <li>AI tools (ChatGPT, automation tools)</li>
-        <li>Data literacy</li>
-        <li>Problem-solving</li>
-      `
-          : aiScore < 70
-          ? `
-        <li>AI collaboration</li>
-        <li>Analytical thinking</li>
-        <li>Communication</li>
-      `
-          : `
-        <li>Leadership</li>
-        <li>Strategy</li>
-        <li>Creative direction</li>
-      `
-      }
-    </ul>
+        <h3>4. Skills to Focus On</h3>
+        <ul>
+            <li>Leadership</li>
+            <li>Strategy</li>
+            <li>...and personalized skill recommendations</li>
+        </ul>
 
-  </div>
+        </div>
 
   <!-- 🔥 ここがCVトリガー -->
   <p style="color:#fde047;font-weight:bold;margin-top:18px;">
