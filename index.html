@@ -1317,11 +1317,20 @@ ${getResultURL()}`;
     function scrollToEmail(){
       const email = document.getElementById("emailInput");
 
-      if(email){
-        email.scrollIntoView({ behavior: "smooth", block: "center" });
-        email.focus();
-      }
+      if(!email){
+      console.log("emailInput not found");
+      return;
     }
+
+    window.scrollTo({
+      top: email.offsetTop - 120,
+      behavior: "smooth"
+    });
+
+    setTimeout(() => {
+    email.focus();
+    }, 400);
+   }
 
     function showSharedResultFromURL(){
       const params = new URLSearchParams(window.location.search);
