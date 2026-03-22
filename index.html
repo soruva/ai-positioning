@@ -1046,6 +1046,14 @@
 
   saveEmailLocally(email);
 
+  if(typeof gtag === "function"){
+  gtag("event", "email_submitted", {
+    ai_score: aiScore,
+    result_label: result,
+    role_category: role
+  });
+}    
+
   const game = document.getElementById("game");
   if(!game) return;
 
