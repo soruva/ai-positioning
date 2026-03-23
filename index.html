@@ -1058,12 +1058,13 @@
   if(!game) return;
 
   game.innerHTML = `
-    <h2>Your AI Positioning Report</h2>
+  <h2>Your AI Positioning Report</h2>
 
-    <p>
-      <strong>Your Position Score:</strong> ${aiScore}%
-      ${result ? `(${result})` : ""}
-    </p>
+  <p>
+    Based on your role as <strong>${role}</strong><br>
+    <strong>Your Position Score:</strong> ${aiScore}%
+    ${result ? `(${result})` : ""}
+  </p>
 
     <p style="color:#fde047;font-weight:bold;margin-top:10px;">
       Your position is already shifting.
