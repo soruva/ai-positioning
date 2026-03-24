@@ -1177,6 +1177,21 @@
   let nextMovesSection = "";
   let skillsSection = "";
 
+  let roleAdvice = "";
+
+if(role === "Designer"){
+  roleAdvice = "Focus on AI-assisted design tools and creative direction.";
+}
+else if(role === "Engineer"){
+  roleAdvice = "Focus on AI integration and system-level thinking.";
+}
+else if(role === "Marketer"){
+  roleAdvice = "Focus on AI-driven content and data analysis.";
+}
+else {
+  roleAdvice = "Focus on combining AI with decision-making skills.";
+}    
+
   if(aiScore < 40){
 
     riskSection = "High risk: your role may be significantly disrupted within 1–2 years.";
