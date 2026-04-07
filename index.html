@@ -941,8 +941,16 @@
   const aiScore = Math.round((score / 20) * 100);
   const percentile = Math.floor(Math.random() * 40) + 55;
   const result = getResultLabelFromScore(aiScore);
+  const feedback = getFeedback(aiScore);
+  const recommendation = getRecommendation(aiScore);
 
-  return { aiScore, percentile, result };
+  return {
+    aiScore,
+    percentile,
+    result,
+    feedback,
+    recommendation
+  };
 }
 
       if(typeof gtag === "function"){
