@@ -1554,6 +1554,16 @@ function getFeedback(aiScore){
   }
 }
 
+function getRecommendation(aiScore){
+  if(aiScore >= 80){
+    return "Focus on scaling and leveraging AI to build systems and products.";
+  } else if(aiScore >= 60){
+    return "Start building practical AI-driven projects and improve execution.";
+  } else {
+    return "Learn fundamentals and start applying AI tools in small use cases.";
+  }
+}
+
 function showResult(score){
   const aiScore = Math.round((score / 20) * 100);
   const percentile = Math.floor(Math.random() * 40) + 55;
