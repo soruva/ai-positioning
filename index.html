@@ -937,10 +937,13 @@
       }, 200);
     }
 
-    function showResult(){
-      aiScore = Math.round((score / 20) * 100);
-      percentile = Math.floor(Math.random() * 40) + 55;
-      result = getResultLabelFromScore(aiScore);
+    function showResult(score){
+  const aiScore = Math.round((score / 20) * 100);
+  const percentile = Math.floor(Math.random() * 40) + 55;
+  const result = getResultLabelFromScore(aiScore);
+
+  return { aiScore, percentile, result };
+}
 
       if(typeof gtag === "function"){
         gtag("event", "view_result", {
