@@ -937,20 +937,60 @@
       }, 200);
     }
 
-    function showResult(score){
+    function showResult(){
   const aiScore = Math.round((score / 20) * 100);
   const percentile = Math.floor(Math.random() * 40) + 55;
   const result = getResultLabelFromScore(aiScore);
   const feedback = getFeedback(aiScore);
   const recommendation = getRecommendation(aiScore);
 
-  return {
-    aiScore,
-    percentile,
-    result,
-    feedback,
-    recommendation
-  };
+  if(typeof gtag === "function"){
+    gtag("event", "view_result", {
+      ai_score: aiScore,
+      result_label: result,
+      role_category: role
+    });
+  }
+
+  const reasonsHtml = getReasons().map(item => `<li>${item}</li>`).join("");
+
+  const game = document.getElementById("game");
+  if(!game) return;
+
+  game.innerHTML = `
+    <div class="alert-bar">🔥 AI disruption is accelerating globally</div>
+
+    <h2>Your Position in the AI Economy</h2>
+
+    <p style="font-weight:bold;">
+      ${safeText(role)}
+    </p>
+
+    <div class="result-card">
+      <div class="result-label">Position Score</div>
+      <div class="result-score" id="animatedScore">0%</div>
+      <div class="result-status">${result}</div>
+      <div class="percentile">Better than ${percentile}% of people</div>
+    </div>
+
+    <p class="scarcity">Only 3% of people score above 80%.</p>
+    <p class="supporting-line">Global average positioning baseline: 58%</p>
+
+    <div class="reason-box">
+      <h3>Why this is your current position</h3>
+      <ul>${reasonsHtml}</ul>
+    </div>
+
+    <div class="reason-box">
+      <h3>Feedback</h3>
+      <p>${feedback}</p>
+    </div>
+
+    <div class="reason-box">
+      <h3>Recommendation</h3>
+      <p>${recommendation}</p>
+    </div>
+  `;
 }
 
       if(typeof gtag === "function"){
