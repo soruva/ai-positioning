@@ -1504,6 +1504,25 @@ function getFutureScenario(aiScore){
       }
     }
 
+function getFeedback(aiScore){
+  if(aiScore >= 80){
+    return "You demonstrate advanced AI usage skills suitable for real-world applications.";
+  } else if(aiScore >= 60){
+    return "You have a solid understanding of AI with room to improve applied usage.";
+  } else {
+    return "You are at the beginning stage of AI understanding. Focus on foundational concepts.";
+  }
+}
+
+function showResult(score){
+  const aiScore = Math.round((score / 20) * 100);
+  const percentile = Math.floor(Math.random() * 40) + 55;
+  const result = getResultLabelFromScore(aiScore);
+  const feedback = getFeedback(aiScore);
+
+  return { aiScore, percentile, result, feedback };
+}
+
     function shareReddit(){
       const url = getResultURL();
       const title = `I discovered my position in the AI economy — my score was ${aiScore}%`;
